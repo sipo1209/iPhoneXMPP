@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SubscribeToNodeViewController : UIViewController
+@interface SubscribeToNodeViewController : UIViewController{
+    IBOutlet UITextField *subscribeField;
+}
 
 @end

@@ -1,18 +1,18 @@
 //
-//  SubscribeToNodeViewController.m
+//  PublishStreamsViewController.m
 //  iPhoneXMPP
 //
 //  Created by Ankur Kothari on 10/28/12.
 //
 //
 
-#import "SubscribeToNodeViewController.h"
-#import "iPhoneXMPPAppDelegate.h"
-@interface SubscribeToNodeViewController ()
+#import "PublishStreamsViewController.h"
+
+@interface PublishStreamsViewController ()
 
 @end
 
-@implementation SubscribeToNodeViewController
+@implementation PublishStreamsViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -23,16 +23,6 @@
     return self;
 }
 
-- (iPhoneXMPPAppDelegate *)appDelegate
-{
-	return (iPhoneXMPPAppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-
--(IBAction)subscribe:(id)sender{
-    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
-    [pubsub subscribeToNode:subscribeField.text withOptions:nil];
-
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

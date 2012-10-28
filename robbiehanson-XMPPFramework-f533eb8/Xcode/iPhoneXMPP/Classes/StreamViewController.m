@@ -26,20 +26,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    tvView.text = (NSString *)items;
+    
+    XMPPPubSub *pubsub = [[self appDelegate]xmppPubSub];
+    
+    [[[self appDelegate]xmppStream] addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+
+    
     // Do any additional setup after loading the view from its nib.
 }
-
-//<iq type='get' from='ankur@ankurs-macbook-pro.local' to='ankur12@ankurs-macbook-pro.local' id='subscriptions1'>
-//<pubsub xmlns='http://jabber.org/protocol/pubsub'>
-//<subscriptions/>
-//</pubsub>
-//</iq>
 
 - (iPhoneXMPPAppDelegate *)appDelegate
 {
 	return (iPhoneXMPPAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+
+
+
+
+
+-(void)setItems:(NSXMLElement *)localItems forStream:(NSString *)localStream{
+    items = localItems;
+    stream = localStream;
+}
 -(void)getSubscriptions{
     [[self appDelegate].xmppPubSub getSubscriptions];
 }

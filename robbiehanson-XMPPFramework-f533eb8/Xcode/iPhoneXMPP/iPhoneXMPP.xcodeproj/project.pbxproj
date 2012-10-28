@@ -97,6 +97,8 @@
 		DA3CCD8E16378C640079A80A /* XMPPElement+Delay.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CCD4616378C640079A80A /* XMPPElement+Delay.m */; };
 		DA3CCD8F16378C640079A80A /* XMPPAttentionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CCD4916378C640079A80A /* XMPPAttentionModule.m */; };
 		DA3CCD9016378C640079A80A /* XMPPMessage+XEP_0224.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CCD4B16378C640079A80A /* XMPPMessage+XEP_0224.m */; };
+		DA6C64F5163D3E53000717A0 /* PublishStreamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6C64F3163D3E53000717A0 /* PublishStreamsViewController.m */; };
+		DA6C64F6163D3E53000717A0 /* PublishStreamsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA6C64F4163D3E53000717A0 /* PublishStreamsViewController.xib */; };
 		DA8F003A163A769A00794CBD /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8F0038163A769A00794CBD /* RegisterViewController.m */; };
 		DA8F003B163A769A00794CBD /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA8F0039163A769A00794CBD /* RegisterViewController.xib */; };
 		DAB12B24163C498F008DD872 /* CreateNodeForPublishingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB12B22163C498F008DD872 /* CreateNodeForPublishingViewController.m */; };
@@ -322,6 +324,9 @@
 		DA3CCD4916378C640079A80A /* XMPPAttentionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPAttentionModule.m; sourceTree = "<group>"; };
 		DA3CCD4A16378C640079A80A /* XMPPMessage+XEP_0224.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XMPPMessage+XEP_0224.h"; sourceTree = "<group>"; };
 		DA3CCD4B16378C640079A80A /* XMPPMessage+XEP_0224.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XMPPMessage+XEP_0224.m"; sourceTree = "<group>"; };
+		DA6C64F2163D3E53000717A0 /* PublishStreamsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishStreamsViewController.h; sourceTree = "<group>"; };
+		DA6C64F3163D3E53000717A0 /* PublishStreamsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishStreamsViewController.m; sourceTree = "<group>"; };
+		DA6C64F4163D3E53000717A0 /* PublishStreamsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishStreamsViewController.xib; sourceTree = "<group>"; };
 		DA8F0037163A769A00794CBD /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		DA8F0038163A769A00794CBD /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		DA8F0039163A769A00794CBD /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
@@ -467,6 +472,9 @@
 				DAB12B27163C499B008DD872 /* SubscribeToNodeViewController.h */,
 				DAB12B28163C499C008DD872 /* SubscribeToNodeViewController.m */,
 				DAB12B29163C499C008DD872 /* SubscribeToNodeViewController.xib */,
+				DA6C64F2163D3E53000717A0 /* PublishStreamsViewController.h */,
+				DA6C64F3163D3E53000717A0 /* PublishStreamsViewController.m */,
+				DA6C64F4163D3E53000717A0 /* PublishStreamsViewController.xib */,
 				DA15D3B0163C11850045F558 /* HomeViewController.h */,
 				DA15D3B1163C11850045F558 /* HomeViewController.m */,
 				DA15D3B2163C11860045F558 /* HomeViewController.xib */,
@@ -1221,6 +1229,7 @@
 				DA15D3B4163C11860045F558 /* HomeViewController.xib in Resources */,
 				DAB12B25163C498F008DD872 /* CreateNodeForPublishingViewController.xib in Resources */,
 				DAB12B2B163C499C008DD872 /* SubscribeToNodeViewController.xib in Resources */,
+				DA6C64F6163D3E53000717A0 /* PublishStreamsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1346,6 +1355,7 @@
 				DA15D3B3163C11860045F558 /* HomeViewController.m in Sources */,
 				DAB12B24163C498F008DD872 /* CreateNodeForPublishingViewController.m in Sources */,
 				DAB12B2A163C499C008DD872 /* SubscribeToNodeViewController.m in Sources */,
+				DA6C64F5163D3E53000717A0 /* PublishStreamsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

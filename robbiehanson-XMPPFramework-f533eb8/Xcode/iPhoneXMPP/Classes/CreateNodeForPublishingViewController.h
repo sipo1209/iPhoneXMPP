@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreateNodeForPublishingViewController : UIViewController
+@interface CreateNodeForPublishingViewController : UIViewController{
+    IBOutlet UITextField *create;
+}
 
 @end

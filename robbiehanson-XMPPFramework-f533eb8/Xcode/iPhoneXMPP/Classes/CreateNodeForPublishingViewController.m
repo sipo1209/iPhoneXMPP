@@ -41,6 +41,11 @@
     // e.g. self.myOutlet = nil;
 }
 
+-(IBAction)createNode:(id)sender{
+    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
+    [pubsub createNode:create.text withOptions:nil];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

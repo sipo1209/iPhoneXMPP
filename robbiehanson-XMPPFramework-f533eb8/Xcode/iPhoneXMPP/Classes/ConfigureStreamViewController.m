@@ -8,6 +8,8 @@
 
 #import "ConfigureStreamViewController.h"
 #import "iPhoneXMPPAppDelegate.h"
+#import "CreateNodeForPublishingViewController.h"
+#import "SubscribeToNodeViewController.h"
 @interface ConfigureStreamViewController ()
 
 @end
@@ -42,9 +44,16 @@
     // e.g. self.myOutlet = nil;
 }
 
--(IBAction)addStream:(id)sender{
-    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
-[pubsub createNode:addField.text withOptions:nil];
+
+
+-(IBAction)publishNewStream:(id)sender{
+    CreateNodeForPublishingViewController *create = [[CreateNodeForPublishingViewController alloc]init];
+    [self.view addSubview:create.view];
+}
+
+-(IBAction)subscribeNewStream:(id)sender{
+    SubscribeToNodeViewController *subscribe = [[SubscribeToNodeViewController alloc] init];
+    [self.view addSubview:subscribe.view];
 }
 
 

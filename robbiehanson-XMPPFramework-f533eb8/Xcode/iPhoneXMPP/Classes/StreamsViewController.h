@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface StreamsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>{
+#import "XMPPPubSub.h"
+@interface StreamsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,XMPPPubSubDelegate>{
     IBOutlet UITableView *tableView;
     NSMutableArray *publishingOnly;
     NSMutableArray *subscribingOnly;

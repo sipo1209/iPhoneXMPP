@@ -11,6 +11,8 @@
 
 #import "StreamsViewController.h"
 #import "iPhoneXMPPAppDelegate.h"
+#import "ConfigureStreamViewController.h"
+#import "StreamViewController.h"
 @interface StreamsViewController ()
 
 @end
@@ -57,14 +59,20 @@
 }
 
 -(IBAction)configure:(id)sender{
+    ConfigureStreamViewController *configure = [[ConfigureStreamViewController alloc]init];
     
+    [self.view addSubview:configure.view];
 }
 
+-(void)getSubscriptions{
+     XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
+    NSString *subs = [pubsub getSubscriptions];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
 {
 	
-	return 1;
+	return [subscribingOnly count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -78,8 +86,44 @@
                                       reuseIdentifier:CellIdentifier];
 	}
 	
+    cell.textLabel.text = [subscribingOnly objectAtIndex:indexPath.row];
 		
 	return cell;
+}
+
+-(void)tableView:(UITableView *)tblView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSString *stream = [subscribingOnly objectAtIndex:indexPath.row];
+    
+    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
+    
+  NSXMLElement *items = (NSXMLElement *)[pubsub allItemsForNode:stream];
+    
+    
+    StreamViewController *streamView = [[StreamViewController alloc]init];
+    
+    [streamView setItems:items forStream:stream];
+    
+    [self.view addSubview:streamView.view];
+    
+}
+
+- (void)xmppPubSub:(XMPPPubSub *)sender didReceiveResult:(XMPPIQ *)iq{
+    
+	NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
+    NSXMLElement *subscriptions = [pubsub elementForName:@"subscriptions"];
+    NSXMLElement *subscription = [subscriptions elementForName:@"subscription"];
+    NSArray *arr = [subscriptions elementsForName:@"subscription"];
+    
+    for (int i = 0; i < [arr count]; i++) {
+        NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
+        NSString *node = [e attributeStringValueForName:@"node"];
+        NSLog(@"%@",node);
+        if (![subscribingOnly containsObject:node])
+            [subscribingOnly addObject:node];
+
+    }
+	
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "RegisterViewController.h"
 #import "iPhoneXMPPAppDelegate.h"
+#import "HomeViewController.h"
 @interface RegisterViewController ()
 
 @end
@@ -53,7 +54,12 @@
     
     
     [[[self appDelegate] xmppStream] registerWithPassword:password.text error:nil] ;
-}
+    
+    
+    HomeViewController *home = [[HomeViewController alloc]init];
+    [self.view addSubview:home.view];
+    
+    }
 
 - (void)viewDidLoad
 {

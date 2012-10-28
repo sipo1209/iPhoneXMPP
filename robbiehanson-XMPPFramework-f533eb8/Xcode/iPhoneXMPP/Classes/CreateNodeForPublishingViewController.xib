@@ -124,7 +124,7 @@
 						<array key="IBUIItems">
 							<object class="IBUINavigationItem" id="822473472">
 								<reference key="IBUINavigationBar" ref="212116837"/>
-								<string key="IBUITitle">Title</string>
+								<string key="IBUITitle">Publish</string>
 								<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="491293748">
 									<string key="IBUITitle">Back</string>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -158,6 +158,15 @@
 						<reference key="destination" ref="191373211"/>
 					</object>
 					<int key="connectionID">3</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">createNode:</string>
+						<reference key="source" ref="39600612"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">9</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -238,7 +247,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">8</int>
+			<int key="maxID">9</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

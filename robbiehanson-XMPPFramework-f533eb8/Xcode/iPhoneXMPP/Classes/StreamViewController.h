@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XMPPPubSub.h"
+@interface StreamViewController : UIViewController{
+    NSXMLElement *items;
+    IBOutlet UITextView *tvView;
+    NSString *stream;
+}
 
-@interface StreamViewController : UIViewController
-
+-(void)setItems:(NSXMLElement *)items forStream:(NSString *)stream;
 @end
+

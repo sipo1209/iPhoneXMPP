@@ -85,19 +85,6 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Classes/StreamsViewController.m"
-         timestampString = "373083620.84218"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "31"
-         endingLineNumber = "31"
-         landmarkName = "-viewDidLoad"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "Classes/SettingsViewController.m"
          timestampString = "373089347.591708"
          startingColumnNumber = "9223372036854775807"
@@ -189,13 +176,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Classes/StreamsViewController.m"
-         timestampString = "373089984.602096"
+         filePath = "Classes/iPhoneXMPPAppDelegate.m"
+         timestampString = "373097375.841795"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "56"
-         endingLineNumber = "56"
-         landmarkName = "-numberOfSectionsInTableView:"
+         startingLineNumber = "468"
+         endingLineNumber = "468"
+         landmarkName = "-xmppStream:didReceiveIQ:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
