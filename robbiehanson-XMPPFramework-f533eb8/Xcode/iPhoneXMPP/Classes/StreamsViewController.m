@@ -23,7 +23,11 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        subscribingOnly = [[NSMutableArray alloc]init];
+        [[[self appDelegate] xmppStream] addDelegate:self delegateQueue:dispatch_get_current_queue()];
+        
+        [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_current_queue()];
+        
     }
     return self;
 }
@@ -31,9 +35,9 @@
 - (void)viewDidLoad
 {
       [super viewDidLoad];
-    [[[self appDelegate] xmppStream] addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [[[self appDelegate] xmppStream] addDelegate:self delegateQueue:dispatch_get_current_queue()];
     
-    [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_current_queue()];
     
     [self getSubscriptions];
     
@@ -128,22 +132,31 @@
         NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
         NSString *node = [e attributeStringValueForName:@"node"];
         NSLog(@"%@",node);
+        
+        if (![subscribingOnly containsObject:node]) {
+            [subscribingOnly addObject:node];
+        }
     }
     [tableView reloadData];
 }
-//- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
-//{
-//		NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
-//    NSXMLElement *subscriptions = [pubsub elementForName:@"subscriptions"];
-//    NSXMLElement *subscription = [subscriptions elementForName:@"subscription"];
-//    NSArray *arr = [subscriptions elementsForName:@"subscription"];
-//    
-//    for (int i = 0; i < [arr count]; i++) {
-//        NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
-//        NSString *node = [e attributeStringValueForName:@"node"];
-//        NSLog(@"%@",node);
-//    }
-//	return NO;
-//}
+- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
+{
+		NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
+    NSXMLElement *subscriptions = [pubsub elementForName:@"subscriptions"];
+    NSXMLElement *subscription = [subscriptions elementForName:@"subscription"];
+    NSArray *arr = [subscriptions elementsForName:@"subscription"];
+    
+    for (int i = 0; i < [arr count]; i++) {
+        NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
+        NSString *node = [e attributeStringValueForName:@"node"];
+        NSLog(@"%@",node);
+        
+        if (![subscribingOnly containsObject:node]) {
+            [subscribingOnly addObject:node];
+        }
+    }
+    [tableView reloadData];
+	return NO;
+}
 
 @end
