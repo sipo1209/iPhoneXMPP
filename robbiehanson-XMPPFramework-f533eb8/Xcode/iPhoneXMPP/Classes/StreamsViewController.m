@@ -30,7 +30,14 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+      [super viewDidLoad];
+    [[[self appDelegate] xmppStream] addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+    [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+    [self getSubscriptions];
+    
+  
     // Do any additional setup after loading the view from its nib.
 }
 - (iPhoneXMPPAppDelegate *)appDelegate
@@ -67,6 +74,7 @@
 -(void)getSubscriptions{
      XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
     NSString *subs = [pubsub getSubscriptions];
+   
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
@@ -108,9 +116,10 @@
     
 }
 
+
 - (void)xmppPubSub:(XMPPPubSub *)sender didReceiveResult:(XMPPIQ *)iq{
     
-	NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
+    NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
     NSXMLElement *subscriptions = [pubsub elementForName:@"subscriptions"];
     NSXMLElement *subscription = [subscriptions elementForName:@"subscription"];
     NSArray *arr = [subscriptions elementsForName:@"subscription"];
@@ -119,11 +128,22 @@
         NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
         NSString *node = [e attributeStringValueForName:@"node"];
         NSLog(@"%@",node);
-        if (![subscribingOnly containsObject:node])
-            [subscribingOnly addObject:node];
-
     }
-	
+    [tableView reloadData];
 }
+//- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
+//{
+//		NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
+//    NSXMLElement *subscriptions = [pubsub elementForName:@"subscriptions"];
+//    NSXMLElement *subscription = [subscriptions elementForName:@"subscription"];
+//    NSArray *arr = [subscriptions elementsForName:@"subscription"];
+//    
+//    for (int i = 0; i < [arr count]; i++) {
+//        NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
+//        NSString *node = [e attributeStringValueForName:@"node"];
+//        NSLog(@"%@",node);
+//    }
+//	return NO;
+//}
 
 @end
