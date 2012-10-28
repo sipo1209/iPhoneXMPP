@@ -13,20 +13,18 @@
 #import "iPhoneXMPPAppDelegate.h"
 #import "ConfigureStreamViewController.h"
 #import "StreamViewController.h"
+#import "HomeViewController.h"
 @interface StreamsViewController ()
 
 @end
 
 @implementation StreamsViewController
-
+@synthesize subscribingOnly;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        subscribingOnly = [[NSMutableArray alloc]init];
-        [[[self appDelegate] xmppStream] addDelegate:self delegateQueue:dispatch_get_current_queue()];
         
-        [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_current_queue()];
         
     }
     return self;
@@ -35,13 +33,7 @@
 - (void)viewDidLoad
 {
       [super viewDidLoad];
-    [[[self appDelegate] xmppStream] addDelegate:self delegateQueue:dispatch_get_current_queue()];
-    
-    [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_current_queue()];
-    
-    [self getSubscriptions];
-    
-  
+   
     // Do any additional setup after loading the view from its nib.
 }
 - (iPhoneXMPPAppDelegate *)appDelegate
@@ -69,17 +61,15 @@
 	return 1;
 }
 
--(IBAction)configure:(id)sender{
+
+
+-(IBAction)configure1:(id)sender{
     ConfigureStreamViewController *configure = [[ConfigureStreamViewController alloc]init];
     
     [self.view addSubview:configure.view];
-}
 
--(void)getSubscriptions{
-     XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
-    NSString *subs = [pubsub getSubscriptions];
-   
-}
+   }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
 {
@@ -120,43 +110,12 @@
     
 }
 
+-(IBAction)back:(id)sender{
+    HomeViewController *home = [[HomeViewController alloc]init];
+    [self.view addSubview:home.view];
+}
 
-- (void)xmppPubSub:(XMPPPubSub *)sender didReceiveResult:(XMPPIQ *)iq{
-    
-    NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
-    NSXMLElement *subscriptions = [pubsub elementForName:@"subscriptions"];
-    NSXMLElement *subscription = [subscriptions elementForName:@"subscription"];
-    NSArray *arr = [subscriptions elementsForName:@"subscription"];
-    
-    for (int i = 0; i < [arr count]; i++) {
-        NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
-        NSString *node = [e attributeStringValueForName:@"node"];
-        NSLog(@"%@",node);
-        
-        if (![subscribingOnly containsObject:node]) {
-            [subscribingOnly addObject:node];
-        }
-    }
-    [tableView reloadData];
-}
-- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
-{
-		NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
-    NSXMLElement *subscriptions = [pubsub elementForName:@"subscriptions"];
-    NSXMLElement *subscription = [subscriptions elementForName:@"subscription"];
-    NSArray *arr = [subscriptions elementsForName:@"subscription"];
-    
-    for (int i = 0; i < [arr count]; i++) {
-        NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
-        NSString *node = [e attributeStringValueForName:@"node"];
-        NSLog(@"%@",node);
-        
-        if (![subscribingOnly containsObject:node]) {
-            [subscribingOnly addObject:node];
-        }
-    }
-    [tableView reloadData];
-	return NO;
-}
+
+
 
 @end

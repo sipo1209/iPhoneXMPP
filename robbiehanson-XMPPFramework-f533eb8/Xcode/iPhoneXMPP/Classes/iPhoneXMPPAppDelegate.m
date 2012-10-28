@@ -205,8 +205,8 @@
 	// Add ourself as a delegate to anything we may be interested in
 
 	[xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-//	[xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
-//    [xmppPubSub addDelegate:self delegateQueue:dispatch_get_current_queue()];
+	[xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [xmppPubSub addDelegate:self delegateQueue:dispatch_get_current_queue()];
 	// Optional:
 	// 
 	// Replace me with the proper domain and port.

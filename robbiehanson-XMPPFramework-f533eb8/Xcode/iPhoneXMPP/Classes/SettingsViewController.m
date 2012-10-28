@@ -37,9 +37,22 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 	//DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
     NSLog(@"authenticated");
     
-    StreamsViewController *streams = [[StreamsViewController alloc] init];
+//    StreamsViewController *streams = [[StreamsViewController alloc] init];
+//    
+//    [self.view addSubview:streams.view];
+
+    [[[self appDelegate] xmppStream] addDelegate:self delegateQueue:dispatch_get_current_queue()];
     
-    [self.view addSubview:streams.view];
+    [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_current_queue()];
+    
+    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
+    
+    //    NSString *subs = [pubsub allItemsForNode:@"hello"];
+    
+    
+    NSString *subs = [pubsub getSubscriptions];
+    
+
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
@@ -49,12 +62,7 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 
 }
 
-- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
-{
-	//DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-	
-	return NO;
-}
+
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
@@ -112,6 +120,37 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 
  // [self dismissModalViewControllerAnimated:YES];
 }
+- (void)xmppPubSub:(XMPPPubSub *)sender didReceiveResult:(XMPPIQ *)iq{
+    
+    NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
+    NSXMLElement *subscriptions = [pubsub elementForName:@"subscriptions"];
+    NSXMLElement *subscription = [subscriptions elementForName:@"subscription"];
+    NSArray *arr = [subscriptions elementsForName:@"subscription"];
+    NSMutableArray *nsarr = [[NSMutableArray alloc]init];
+    for (int i = 0; i < [arr count]; i++) {
+        NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
+        NSString *node = [e attributeStringValueForName:@"node"];
+        NSLog(@"%@",node);
+        if (![node isEqual:NULL]){
+            if (![nsarr containsObject:node]) {
+            [nsarr addObject:node];
+        }
+        }
+        if (i == [arr count] - 1) {
+          
+        StreamsViewController *streams = [[StreamsViewController alloc] init];
+        streams.subscribingOnly = nsarr;
+        [self.view addSubview:streams.view];
+        }
+        
+    }
+    
+    
+        
+    
+            //
+}
+
 
 - (IBAction)hideKeyboard:(id)sender {
   [sender resignFirstResponder];

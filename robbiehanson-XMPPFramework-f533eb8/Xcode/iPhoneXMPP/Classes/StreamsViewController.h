@@ -15,4 +15,6 @@
     NSMutableArray *pubsubBoth;
 }
 
+@property (nonatomic,retain)NSMutableArray *subscribingOnly;
+
 @end
