@@ -1,7 +1,7 @@
 #import "iPhoneXMPPAppDelegate.h"
 #import "RootViewController.h"
 #import "SettingsViewController.h"
-
+#import "HomeViewController.h"
 #import "GCDAsyncSocket.h"
 #import "XMPP.h"
 #import "XMPPReconnect.h"
@@ -9,7 +9,7 @@
 #import "XMPPRosterCoreDataStorage.h"
 #import "XMPPvCardAvatarModule.h"
 #import "XMPPvCardCoreDataStorage.h"
-
+#import "StreamsViewController.h"
 #import "DDLog.h"
 #import "DDTTYLogger.h"
 
@@ -52,7 +52,8 @@
 @synthesize navigationController;
 @synthesize settingsViewController;
 @synthesize loginButton;
-
+@synthesize homeViewController;
+@synthesize publications;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Configure logging framework
@@ -68,14 +69,15 @@
 	[window setRootViewController:navigationController];
 	[window makeKeyAndVisible];
 
-	if (![self connect])
-	{
-		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC);
-		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-			
-			[navigationController presentModalViewController:settingsViewController animated:YES];
-		});
-	}
+//	if (![self connect])
+//	{
+//		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC);
+//		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//			
+////			[navigationController presentModalViewController:settingsViewController animated:YES];
+//            [navigationController presentViewController:homeViewController animated:NO completion:nil];
+//		});
+//	}
 		
 	return YES;
 }
@@ -204,8 +206,8 @@
 	// Add ourself as a delegate to anything we may be interested in
 
 	[xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-	[xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    [xmppPubSub addDelegate:self delegateQueue:dispatch_get_current_queue()];
+//	[xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+//    [xmppPubSub addDelegate:self delegateQueue:dispatch_get_current_queue()];
 	// Optional:
 	// 
 	// Replace me with the proper domain and port.
@@ -266,6 +268,8 @@
 	XMPPPresence *presence = [XMPPPresence presence]; // type="available" is implicit
 	
 	[[self xmppStream] sendElement:presence];
+    
+    
 }
 
 - (void)goOffline
@@ -445,6 +449,10 @@
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
+   
+    
+    
+    
 	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
 	
 	[self goOnline];

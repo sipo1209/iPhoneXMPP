@@ -1,20 +1,18 @@
 //
-//  HomeViewController.m
+//  RegsiterViewController.m
 //  iPhoneXMPP
 //
-//  Created by Ankur Kothari on 10/27/12.
+//  Created by Ankur Kothari on 10/26/12.
 //
 //
 
-#import "HomeViewController.h"
-#import "SettingsViewController.h"
-#import "iPhoneXMPPAppDelegate.h"
 #import "RegisterViewController.h"
-@interface HomeViewController ()
+#import "iPhoneXMPPAppDelegate.h"
+@interface RegisterViewController ()
 
 @end
 
-@implementation HomeViewController
+@implementation RegisterViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,25 +22,39 @@
     }
     return self;
 }
-
-
 - (iPhoneXMPPAppDelegate *)appDelegate
 {
 	return (iPhoneXMPPAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
--(IBAction)signIn:(id)sender{
-    SettingsViewController *settings = [[SettingsViewController alloc]init];
-    UINavigationController *nav = [self appDelegate].navigationController;
-    [nav presentViewController:settings animated:NO completion:nil];
+- (void)setField:(UITextField *)field forKey:(NSString *)key
+{
+    if (field.text != nil)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:field.text forKey:key];
+    } else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+    }
 }
+
 
 -(IBAction)signUp:(id)sender{
-    RegisterViewController *register1 = [[RegisterViewController alloc]init];
-    UINavigationController *nav = [self appDelegate].navigationController;
-    [nav presentViewController:register1 animated:NO completion:nil];
+    [self setField:username forKey:kXMPPmyJID];
+    [self setField:password forKey:kXMPPmyPassword];
+    
+    if ([[self appDelegate] connect])
+	{
+		//titleLabel.text = [[[[self appDelegate] xmppStream] myJID] bare];
+	} else
+	{
+		//titleLabel.text = @"No JID";
+	}
 
+    
+    
+    [[[self appDelegate] xmppStream] registerWithPassword:password.text error:nil] ;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

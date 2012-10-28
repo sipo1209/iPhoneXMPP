@@ -10,7 +10,7 @@
 */
 
 #import "StreamsViewController.h"
-
+#import "iPhoneXMPPAppDelegate.h"
 @interface StreamsViewController ()
 
 @end
@@ -31,7 +31,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
-
+- (iPhoneXMPPAppDelegate *)appDelegate
+{
+	return (iPhoneXMPPAppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -50,18 +53,18 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return 2;
+	return 1;
 }
 
-- (NSString *)tableView:(UITableView *)sender titleForHeaderInSection:(NSInteger)sectionIndex
-{
-	
+-(IBAction)configure:(id)sender{
+    
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex
 {
 	
-	return 0;
+	return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -1,18 +1,18 @@
 //
-//  RegsiterViewController.m
+//  SubscribeToNodeViewController.m
 //  iPhoneXMPP
 //
-//  Created by Ankur Kothari on 10/26/12.
+//  Created by Ankur Kothari on 10/28/12.
 //
 //
 
-#import "RegsiterViewController.h"
-
-@interface RegsiterViewController ()
+#import "SubscribeToNodeViewController.h"
+#import "iPhoneXMPPAppDelegate.h"
+@interface SubscribeToNodeViewController ()
 
 @end
 
-@implementation RegsiterViewController
+@implementation SubscribeToNodeViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -21,6 +21,11 @@
         // Custom initialization
     }
     return self;
+}
+
+- (iPhoneXMPPAppDelegate *)appDelegate
+{
+	return (iPhoneXMPPAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 - (void)viewDidLoad

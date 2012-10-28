@@ -11,6 +11,7 @@
 @interface ConfigureStreamViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>{
     IBOutlet UITableView *tableView;
     NSMutableArray *options;
+    IBOutlet UITextField *addField;
 }
 
 @end

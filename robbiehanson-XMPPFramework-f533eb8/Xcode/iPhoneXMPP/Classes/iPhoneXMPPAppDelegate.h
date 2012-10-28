@@ -4,7 +4,7 @@
 #import "XMPPFramework.h"
 
 @class SettingsViewController;
-
+@class HomeViewController;
 
 @interface iPhoneXMPPAppDelegate : NSObject <UIApplicationDelegate, XMPPRosterDelegate>
 {
@@ -29,8 +29,12 @@
 	UIWindow *window;
 	UINavigationController *navigationController;
     SettingsViewController *loginViewController;
+    HomeViewController *homeViewController;
     UIBarButtonItem *loginButton;
+    
+    NSMutableArray *publications;
 }
+@property (nonatomic, strong) NSMutableArray *publications;
 @property (nonatomic, strong, readonly) XMPPPubSub *xmppPubSub;
 @property (nonatomic, strong, readonly) XMPPStream *xmppStream;
 @property (nonatomic, strong, readonly) XMPPReconnect *xmppReconnect;
@@ -44,6 +48,7 @@
 @property (nonatomic, strong) IBOutlet UIWindow *window;
 @property (nonatomic, strong) IBOutlet UINavigationController *navigationController;
 @property (nonatomic, strong) IBOutlet SettingsViewController *settingsViewController;
+@property (nonatomic, strong) IBOutlet  HomeViewController *homeViewController;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *loginButton;
 
 - (NSManagedObjectContext *)managedObjectContext_roster;

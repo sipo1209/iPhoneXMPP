@@ -7,8 +7,8 @@
 //
 
 #import "SettingsViewController.h"
-
-
+#import "iPhoneXMPPAppDelegate.h"
+#import "StreamsViewController.h"
 NSString *const kXMPPmyJID = @"kXMPPmyJID";
 NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 
@@ -26,6 +26,42 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark View lifecycle
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+-(void)viewDidLoad{
+    	[[[self appDelegate]xmppStream] addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    	
+}
+
+- (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
+{
+	//DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+    NSLog(@"authenticated");
+    
+    StreamsViewController *streams = [[StreamsViewController alloc] init];
+    
+    [self.view addSubview:streams.view];
+}
+
+- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
+{
+	//DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+    NSLog(@"not authenticated");
+
+}
+
+- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
+{
+	//DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+	
+	return NO;
+}
+
+- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
+{
+	NSLog(@"recieved");
+}
+
+
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
@@ -47,19 +83,34 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
   }
 }
-
+- (iPhoneXMPPAppDelegate *)appDelegate
+{
+	return (iPhoneXMPPAppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Actions
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (IBAction)done:(id)sender
 {
+   // StreamsViewController *streams = [[StreamsViewController alloc]init];
+    
   [self setField:jidField forKey:kXMPPmyJID];
   [self setField:passwordField forKey:kXMPPmyPassword];
     
-    
+    if ([[self appDelegate] connect])
+	{
+		//titleLabel.text = [[[[self appDelegate] xmppStream] myJID] bare];
+	} else
+	{
+		//titleLabel.text = @"No JID";
+	}
 
-  [self dismissModalViewControllerAnimated:YES];
+    
+//    UINavigationController *nav = [self appDelegate].navigationController;
+//    [nav presentViewController:streams animated:normal completion:nil];
+
+ // [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)hideKeyboard:(id)sender {

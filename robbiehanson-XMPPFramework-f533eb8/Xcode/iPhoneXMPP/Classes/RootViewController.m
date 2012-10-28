@@ -203,22 +203,24 @@
 -(IBAction)send:(id)sender{
     
     XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
-  [pubsub createNode:@"hello3" withOptions:nil];
-    
-   [pubsub subscribeToNode:@"hello3" withOptions:nil];
+//  [pubsub createNode:@"hello3" withOptions:nil];
 //    
-//    NSString *subs = [pubsub getSubscriptionsForNode:@"hello"];
+//   [pubsub subscribeToNode:@"hello3" withOptions:nil];
+////    
+////    NSString *subs = [pubsub getSubscriptionsForNode:@"hello"];
+//    
+//    
+////    TweetsViewController *tweets = [[TweetsViewController alloc]init];
+////    [self.view addSubview:tweets.view];
+//    
+//    NSXMLElement * item = [NSXMLElement elementWithName:@"entry" stringValue:@"hi"];
+//   // NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:msg];
+//   // [pubsub subscribeToNode:@"hello" withOptions:nil];
+//    [pubsub publishToNode:@"hello3" entry:item];
     
-    
-//    TweetsViewController *tweets = [[TweetsViewController alloc]init];
-//    [self.view addSubview:tweets.view];
-    
-    NSXMLElement * item = [NSXMLElement elementWithName:@"entry" stringValue:@"hi"];
-   // NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:msg];
-   // [pubsub subscribeToNode:@"hello" withOptions:nil];
-    [pubsub publishToNode:@"hello3" entry:item];
-    
-   // NSString *items = [pubsub getSubscriptionsForNode:@"hello"];
+    NSString *items = [pubsub getSubscriptionsForNode:@"hello"];
+    NSString *items1 = [pubsub getSubscriptions];
+    NSLog(@"%@ %@",items,items1);
     
 //    [[[self appDelegate]xmppStream] registerWithPassword:@"12345678" error:nil];
     

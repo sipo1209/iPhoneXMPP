@@ -1,25 +1,24 @@
 //
-//  ConfigureStreamViewController.m
+//  CreateNodeForPublishingViewController.m
 //  iPhoneXMPP
 //
-//  Created by Ankur Kothari on 10/27/12.
+//  Created by Ankur Kothari on 10/28/12.
 //
 //
 
-#import "ConfigureStreamViewController.h"
+#import "CreateNodeForPublishingViewController.h"
 #import "iPhoneXMPPAppDelegate.h"
-@interface ConfigureStreamViewController ()
+@interface CreateNodeForPublishingViewController ()
 
 @end
 
-@implementation ConfigureStreamViewController
+@implementation CreateNodeForPublishingViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        options = [[NSMutableArray alloc]init];
-        
+        // Custom initialization
     }
     return self;
 }
@@ -41,12 +40,6 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
--(IBAction)addStream:(id)sender{
-    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
-[pubsub createNode:addField.text withOptions:nil];
-}
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

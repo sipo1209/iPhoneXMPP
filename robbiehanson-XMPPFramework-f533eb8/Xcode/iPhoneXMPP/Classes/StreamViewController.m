@@ -7,7 +7,7 @@
 //
 
 #import "StreamViewController.h"
-
+#import "iPhoneXMPPAppDelegate.h"
 @interface StreamViewController ()
 
 @end
@@ -27,6 +27,21 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+}
+
+//<iq type='get' from='ankur@ankurs-macbook-pro.local' to='ankur12@ankurs-macbook-pro.local' id='subscriptions1'>
+//<pubsub xmlns='http://jabber.org/protocol/pubsub'>
+//<subscriptions/>
+//</pubsub>
+//</iq>
+
+- (iPhoneXMPPAppDelegate *)appDelegate
+{
+	return (iPhoneXMPPAppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+-(void)getSubscriptions{
+    [[self appDelegate].xmppPubSub getSubscriptions];
 }
 
 - (void)viewDidUnload
