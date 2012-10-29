@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "StreamsViewController.h"
 
 extern NSString *const kXMPPmyJID;
 extern NSString *const kXMPPmyPassword;
@@ -17,8 +17,9 @@ extern NSString *const kXMPPmyPassword;
 {
   UITextField *jidField;
   UITextField *passwordField;
+    StreamsViewController *streams;
 }
-
+@property (nonatomic,strong) StreamsViewController *streams;
 @property (nonatomic,strong) IBOutlet UITextField *jidField;
 @property (nonatomic,strong) IBOutlet UITextField *passwordField;
 

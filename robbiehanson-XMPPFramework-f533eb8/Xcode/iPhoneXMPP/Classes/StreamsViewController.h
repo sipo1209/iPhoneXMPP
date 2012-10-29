@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "XMPPPubSub.h"
+#import "StreamViewController.h"
 @interface StreamsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,XMPPPubSubDelegate>{
-    IBOutlet UITableView *tableView;
-    NSMutableArray *publishingOnly;
+       NSMutableArray *publishingOnly;
     NSMutableArray *subscribingOnly;
     NSMutableArray *pubsubBoth;
+    StreamViewController *stream;
 }
-
+@property (nonatomic, retain)  StreamViewController *stream;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic,retain)NSMutableArray *subscribingOnly;
 
 @end

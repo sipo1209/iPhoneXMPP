@@ -14,7 +14,7 @@
 @end
 
 @implementation RegisterViewController
-
+@synthesize home;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,26 +38,35 @@
     }
 }
 
+- (void)createAccount
+{
+	
+	
+	    NSError *error = nil;
+		
+    NSString *spassword = password.text;
+    
+	BOOL success = [[[self appDelegate] xmppStream] registerWithPassword:spassword error:&error];
+    
+  home = [[HomeViewController alloc]init];
+       [self.view addSubview:home.view];
+	
+}
+
 
 -(IBAction)signUp:(id)sender{
+    
+    
     [self setField:username forKey:kXMPPmyJID];
-    [self setField:password forKey:kXMPPmyPassword];
-    
-    if ([[self appDelegate] connect])
-	{
-		//titleLabel.text = [[[[self appDelegate] xmppStream] myJID] bare];
-	} else
-	{
-		//titleLabel.text = @"No JID";
-	}
+   // [self setField:password forKey:kXMPPmyPassword];
+    NSError *error = nil;
 
+    [[[self appDelegate]  xmppStream] connect:&error];
     
+    [self createAccount];
     
-    [[[self appDelegate] xmppStream] registerWithPassword:password.text error:nil] ;
-    
-    
-    HomeViewController *home = [[HomeViewController alloc]init];
-    [self.view addSubview:home.view];
+//    HomeViewController *home = [[HomeViewController alloc]init];
+//    [self.view addSubview:home.view];
     
     }
 

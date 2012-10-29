@@ -14,7 +14,7 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 
 
 @implementation SettingsViewController
-
+@synthesize streams;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Init/dealloc methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,14 +131,15 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
         NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
         NSString *node = [e attributeStringValueForName:@"node"];
         NSLog(@"%@",node);
-        if (![node isEqual:NULL]){
+         NSRange range = [node rangeOfString:@":"];
+        if (node != nil && !(range.length > 0)){
             if (![nsarr containsObject:node]) {
             [nsarr addObject:node];
         }
         }
         if (i == [arr count] - 1) {
           
-        StreamsViewController *streams = [[StreamsViewController alloc] init];
+        streams = [[StreamsViewController alloc] init];
         streams.subscribingOnly = nsarr;
         [self.view addSubview:streams.view];
         }

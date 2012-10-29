@@ -323,6 +323,45 @@
 	return YES;
 }
 
+- (BOOL)connectToRegister:(NSString *)password
+{
+	if (![xmppStream isDisconnected]) {
+		return YES;
+	}
+    
+	NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
+	 
+	//
+	// If you don't want to use the Settings view to set the JID,
+	// uncomment the section below to hard code a JID and password.
+	//
+	// myJID = @"user@gmail.com/xmppframework";
+	// myPassword = @"";
+	
+	if (myJID == nil ) {
+		return NO;
+	}
+    
+	[xmppStream setMyJID:[XMPPJID jidWithString:myJID]];
+	  
+	NSError *error = nil;
+	if (![xmppStream connect:&error])
+	{
+		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error connecting"
+		                                                    message:@"See console for error details."
+		                                                   delegate:nil
+		                                          cancelButtonTitle:@"Ok"
+		                                          otherButtonTitles:nil];
+		[alertView show];
+        
+		DDLogError(@"Error connecting: %@", error);
+        
+		return NO;
+	}
+    
+	return YES;
+}
+
 - (void)disconnect
 {
 	[self goOffline];

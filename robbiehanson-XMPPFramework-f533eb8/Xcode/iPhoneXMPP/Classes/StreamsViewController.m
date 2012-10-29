@@ -20,6 +20,8 @@
 
 @implementation StreamsViewController
 @synthesize subscribingOnly;
+@synthesize tableView;
+@synthesize stream;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -56,10 +58,6 @@
 #pragma mark UITableView
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-	return 1;
-}
 
 
 
@@ -79,6 +77,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+   
 	static NSString *CellIdentifier = @"Cell";
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -93,20 +92,20 @@
 	return cell;
 }
 
--(void)tableView:(UITableView *)tblView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    NSString *stream = [subscribingOnly objectAtIndex:indexPath.row];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+  
+    NSString *sstream = [subscribingOnly objectAtIndex:indexPath.row];
     
     XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
     
-  NSXMLElement *items = (NSXMLElement *)[pubsub allItemsForNode:stream];
+  NSXMLElement *items = (NSXMLElement *)[pubsub allItemsForNode:sstream];
     
     
-    StreamViewController *streamView = [[StreamViewController alloc]init];
+   stream = [[StreamViewController alloc]init];
     
-    [streamView setItems:items forStream:stream];
+    [stream setItems:items forStream:sstream];
     
-    [self.view addSubview:streamView.view];
+    [self.view addSubview:stream.view];
     
 }
 

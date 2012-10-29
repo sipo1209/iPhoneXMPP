@@ -56,5 +56,6 @@
 
 - (BOOL)connect;
 - (void)disconnect;
+- (BOOL)connectToRegister:(NSString *)password;
 
 @end
