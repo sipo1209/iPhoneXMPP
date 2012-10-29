@@ -56,6 +56,9 @@
 @synthesize publications;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    
+    
 	// Configure logging framework
 	
 	[DDLog addLogger:[DDTTYLogger sharedInstance]];
@@ -81,6 +84,55 @@
 		
 	return YES;
 }
+
+// Delegation methods
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken {
+    
+    
+    NSString *devTok = [devToken description];
+    devTok = [devTok stringByReplacingOccurrencesOfString:@" " withString:@""];
+    devTok = [devTok stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    devTok = [devTok stringByReplacingOccurrencesOfString:@">" withString:@""];
+    CFUUIDRef theUUID = CFUUIDCreate(NULL);
+    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+    CFRelease(theUUID);
+    NSString *device_id = (__bridge NSString *)string;
+    
+    NSURL *url = [NSURL URLWithString:
+                  @"http://10.124.4.70:3000/device"];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+    NSString *postStr =  [NSString stringWithFormat:@"device_id=%@&device_type=IOS&registration_id=%@",devTok,device_id];
+    NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];
+    [req addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [req addValue:strLength forHTTPHeaderField:@"Content-Length"];
+    [req setHTTPMethod:@"POST"];
+    [req setHTTPBody: [postStr dataUsingEncoding:NSUTF8StringEncoding]];
+    NSURLConnection  * conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
+    if (conn) {
+        NSMutableData *   webData = [NSMutableData data];
+    }
+}
+
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSString *message = nil;
+    id alert = [userInfo objectForKey:@"alert"];
+    if ([alert isKindOfClass:[NSString class]]) {
+        message = alert;
+    } else if ([alert isKindOfClass:[NSDictionary class]]) {
+        message = [alert objectForKey:@"body"];
+    }
+    if (alert) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Title"
+                                                            message:@"AThe message."  delegate:self
+                                                  cancelButtonTitle:@"button 1"
+                                                  otherButtonTitles:@"button", nil];
+        [alertView show];
+       
+    }
+}
+
 
 - (void)dealloc
 {

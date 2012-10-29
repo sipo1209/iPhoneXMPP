@@ -48,7 +48,14 @@
     
 	BOOL success = [[[self appDelegate] xmppStream] registerWithPassword:spassword error:&error];
     
-  	
+    XMPPRoster *roster =  [[self appDelegate] xmppRoster ];
+    [roster subscribePresenceToUser:[XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"]];
+    
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:@"registered"];
+    
+    XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"];
+    XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
+    [message addChild:body];
 }
 
 

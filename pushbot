@@ -1,0 +1,12 @@
+1. Keep a track of every user along with their devices. Have every user registered as their jabber id which is created based on some identification. For example Whatsapp uses their phone number to create their jabber ids. 
+
+2. When the app starts, ask the user to register himself. Now register him, retrieve the jabber id and the device id associated with the device he is using. Send both to the rails  server to be added to the database.
+
+3. Whenever the application he is using is offline and he receives a message on a stream is following then send him a push notification. And when the user clicks on the push, it should take him to the stream page which has just received the message. 
+
+4. First find out all the users who are subscribed to the node. Find out the respective devices. Then send all of them a push notification that they have received a message on a particular node. this is has to be automated. 
+
+5. Create a bot. Which has a subscription for all the nodes created. Whenever there is a message on any node, the bot which is online always will receive the notification about it. Then the bot finds out who all are subscribed to the node. Then sends calls a method on the rails app to send a push to all the users who are subscribed to the node and then the rails app does the pushing thing. 
+
+6. When the app starts,  the user adds the bot to his friends roster group. The bot is subscribed to all the nodes the user is subscribed to. Now whenever the anyone sends a message to the node, the bot gets a notification. It will act on the notification retrieves from the server all the users subscribed to the node. 
+
