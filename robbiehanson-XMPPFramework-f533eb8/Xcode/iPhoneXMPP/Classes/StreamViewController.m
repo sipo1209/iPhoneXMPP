@@ -51,9 +51,7 @@
     items = localItems;
     stream = localStream;
 }
--(void)getSubscriptions{
-    [[self appDelegate].xmppPubSub getSubscriptions];
-}
+
 
 - (void)viewDidUnload
 {
@@ -67,4 +65,24 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(void)getItems{
+    
+    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
+    
+    NSXMLElement *items = (NSXMLElement *)[pubsub allItemsForNode:stream];
+    
+    tvView.text = (NSString *)items;
+
+}
+
+
+-(IBAction)publish:(id)sender{
+    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
+    NSXMLElement * item = [NSXMLElement elementWithName:@"entry" stringValue:@"hi"];
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:textField.text];
+       
+        [pubsub publishToNode:stream entry:item];
+
+    [self getItems];
+}
 @end

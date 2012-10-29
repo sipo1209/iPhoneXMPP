@@ -22,6 +22,8 @@
 @synthesize subscribingOnly;
 @synthesize tableView;
 @synthesize stream;
+@synthesize configure;
+@synthesize home;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -62,7 +64,7 @@
 
 
 -(IBAction)configure1:(id)sender{
-    ConfigureStreamViewController *configure = [[ConfigureStreamViewController alloc]init];
+    configure = [[ConfigureStreamViewController alloc]init];
     
     [self.view addSubview:configure.view];
 
@@ -110,7 +112,7 @@
 }
 
 -(IBAction)back:(id)sender{
-    HomeViewController *home = [[HomeViewController alloc]init];
+    home = [[HomeViewController alloc]init];
     [self.view addSubview:home.view];
 }
 

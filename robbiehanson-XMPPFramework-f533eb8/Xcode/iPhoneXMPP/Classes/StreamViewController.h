@@ -12,6 +12,8 @@
     NSXMLElement *items;
     IBOutlet UITextView *tvView;
     NSString *stream;
+    
+    IBOutlet UITextField *textField;
 }
 
 -(void)setItems:(NSXMLElement *)items forStream:(NSString *)stream;

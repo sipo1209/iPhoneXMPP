@@ -61,9 +61,12 @@
    // [self setField:password forKey:kXMPPmyPassword];
     NSError *error = nil;
 
-    [[[self appDelegate]  xmppStream] connect:&error];
     
-    [self createAccount];
+    [[self appDelegate] connect];
+    
+    [[[self appDelegate] xmppStream ]addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+   
     
 //    HomeViewController *home = [[HomeViewController alloc]init];
 //    [self.view addSubview:home.view];
@@ -88,4 +91,22 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
+{
+    [self createAccount];
+}
+
+- (IBAction)hideKeyboard:(id)sender {
+    [sender resignFirstResponder];
+    [self setField:username forKey:kXMPPmyJID];
+    // [self setField:password forKey:kXMPPmyPassword];
+    NSError *error = nil;
+    
+    
+    [[self appDelegate] connect];
+    
+    [[[self appDelegate] xmppStream ]addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+
+}
 @end
