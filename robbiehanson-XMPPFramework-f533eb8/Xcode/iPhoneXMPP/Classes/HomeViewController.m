@@ -34,13 +34,15 @@
 -(IBAction)signIn:(id)sender{
     SettingsViewController *settings = [[SettingsViewController alloc]init];
     UINavigationController *nav = [self appDelegate].navigationController;
-    [nav presentViewController:settings animated:NO completion:nil];
+    [nav pushViewController:settings animated:YES];
+ //   [nav presentViewController:settings animated:NO completion:nil];
 }
 
 -(IBAction)signUp:(id)sender{
     RegisterViewController *register1 = [[RegisterViewController alloc]init];
     UINavigationController *nav = [self appDelegate].navigationController;
-    [nav presentViewController:register1 animated:NO completion:nil];
+    [nav pushViewController:register1 animated:YES];
+  //  [nav presentViewController:register1 animated:NO completion:nil];
 
 }
 - (void)viewDidLoad

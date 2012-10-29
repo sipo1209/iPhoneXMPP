@@ -48,9 +48,7 @@
     
 	BOOL success = [[[self appDelegate] xmppStream] registerWithPassword:spassword error:&error];
     
-  home = [[HomeViewController alloc]init];
-       [self.view addSubview:home.view];
-	
+  	
 }
 
 
@@ -68,8 +66,8 @@
     
    
     
-//    HomeViewController *home = [[HomeViewController alloc]init];
-//    [self.view addSubview:home.view];
+    UINavigationController *nav = [self appDelegate].navigationController;
+    [nav popViewControllerAnimated:YES];
     
     }
 

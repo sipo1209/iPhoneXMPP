@@ -81,7 +81,7 @@
     NSXMLElement * item = [NSXMLElement elementWithName:@"entry" stringValue:@"hi"];
     NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:textField.text];
        
-        [pubsub publishToNode:stream entry:item];
+    [pubsub publishToNode:stream entry:item];
 
     [self getItems];
 }

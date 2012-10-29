@@ -141,7 +141,9 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
           
         streams = [[StreamsViewController alloc] init];
         streams.subscribingOnly = nsarr;
-        [self.view addSubview:streams.view];
+            UINavigationController *nav = [self appDelegate].navigationController;
+            [nav pushViewController:streams animated:YES];
+        
         }
         
     }

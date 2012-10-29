@@ -36,7 +36,11 @@
 
 - (void)viewDidLoad
 {
-      [super viewDidLoad];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                       style:UIBarButtonSystemItemAdd target:self action:@selector(configure1:)];
+    self.navigationItem.rightBarButtonItem = settingsButton;
+   
+    [super viewDidLoad];
    
     // Do any additional setup after loading the view from its nib.
 }
@@ -103,18 +107,16 @@
   NSXMLElement *items = (NSXMLElement *)[pubsub allItemsForNode:sstream];
     
     
-   stream = [[StreamViewController alloc]init];
+    stream = [[StreamViewController alloc]init];
     
     [stream setItems:items forStream:sstream];
     
-    [self.view addSubview:stream.view];
+    UINavigationController *nav = [self appDelegate].navigationController;
+    [nav pushViewController:stream animated:YES];
     
 }
 
--(IBAction)back:(id)sender{
-    home = [[HomeViewController alloc]init];
-    [self.view addSubview:home.view];
-}
+
 
 
 
