@@ -59,6 +59,28 @@
     
     XMPPStream *str = [self appDelegate].xmppStream;
     [str sendElement:message];
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    // getting an NSString
+    NSString *device_identifier = [prefs stringForKey:@"device_identifier"];
+    
+NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
+    
+       NSURL *url = [NSURL URLWithString:
+                  @"http://10.124.4.70:3000/user"];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+    NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&jabber_id=%@",device_identifier,myJID];
+    NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];
+    [req addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [req addValue:strLength forHTTPHeaderField:@"Content-Length"];
+    [req setHTTPMethod:@"POST"];
+    [req setHTTPBody: [postStr dataUsingEncoding:NSUTF8StringEncoding]];
+    NSURLConnection  * conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
+    if (conn) {
+        NSMutableData *   webData = [NSMutableData data];
+    }
+
 }
 
 

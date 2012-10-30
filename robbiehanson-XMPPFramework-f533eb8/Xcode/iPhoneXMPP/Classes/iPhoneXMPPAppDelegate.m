@@ -98,10 +98,17 @@
     CFRelease(theUUID);
     NSString *device_id = (__bridge NSString *)string;
     
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    // saving a Float
+    [prefs setObject:device_id forKey:@"device_identifier"];
+    
+    // This is suggested to synch prefs, but is not needed (I didn't put it in my tut)
+    [prefs synchronize];
+    
     NSURL *url = [NSURL URLWithString:
                   @"http://10.124.4.70:3000/device"];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
-    NSString *postStr =  [NSString stringWithFormat:@"device_id=%@&device_type=IOS&registration_id=%@",devTok,device_id];
+    NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&device_type=IOS&registration_id=%@",device_id,devTok];
     NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];
     [req addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [req addValue:strLength forHTTPHeaderField:@"Content-Length"];
