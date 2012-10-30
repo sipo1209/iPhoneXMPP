@@ -253,7 +253,7 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     xmppCapabilities.autoFetchNonHashedCapabilities = NO;
 
     NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
-    xmppPubSub = [[XMPPPubSub alloc]initWithServiceJID:[XMPPJID jidWithString:@"ankurs-macbook-pro.local"]];//myJID]];// Activate xmpp modules
+    xmppPubSub = [[XMPPPubSub alloc]initWithServiceJID:[XMPPJID jidWithString:@"pubsub.ankurs-macbook-pro.local"]];//myJID]];// Activate xmpp modules
 
 	[xmppReconnect         activate:xmppStream];
 	[xmppRoster            activate:xmppStream];
