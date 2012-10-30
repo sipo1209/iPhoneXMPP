@@ -44,6 +44,15 @@
 -(IBAction)createNode:(id)sender{
     XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
     [pubsub createNode:create.text withOptions:nil];
+    
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:@"nodecreated"];
+    
+    XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"];
+    XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
+    [message addChild:body];
+    
+    XMPPStream *str = [self appDelegate].xmppStream;
+    [str sendElement:message];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

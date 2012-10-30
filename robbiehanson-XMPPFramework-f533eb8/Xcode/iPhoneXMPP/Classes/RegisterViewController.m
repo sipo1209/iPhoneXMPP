@@ -56,6 +56,9 @@
     XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"];
     XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
     [message addChild:body];
+    
+    XMPPStream *str = [self appDelegate].xmppStream;
+    [str sendElement:message];
 }
 
 
