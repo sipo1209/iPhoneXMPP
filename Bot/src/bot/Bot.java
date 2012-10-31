@@ -42,6 +42,7 @@ import org.jivesoftware.smack.packet.IQ.Type;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.provider.IQProvider;
 import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smackx.ServiceDiscoveryManager;
 import org.jivesoftware.smackx.packet.DiscoverItems;
@@ -61,10 +62,13 @@ import org.jivesoftware.smackx.pubsub.SubscriptionsExtension;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 import org.jivesoftware.smackx.pubsub.packet.PubSub;
 import org.jivesoftware.smackx.pubsub.packet.PubSubNamespace;
+import org.xmlpull.mxp1.MXParser;
+import org.xmlpull.v1.XmlPullParser;
 
 public class Bot implements MessageListener, PacketListener, PacketInterceptor{
 
-    XMPPConnection connection;
+  public  XMPPConnection connection;
+  public static String JIDs;
 
     public void login(String userName, String password) throws XMPPException {
         ConnectionConfiguration cc = new ConnectionConfiguration("ankurs-macbook-pro.local", 5222, "ankurs-macbook-pro.local");
@@ -95,7 +99,8 @@ PacketCollector myCollector = connection.createPacketCollector(filter);
 PacketListener myListener;
             myListener = new PacketListener() {
      public void processPacket(Packet packet) {
-         System.out.println(packet);
+       //  System.out.println(packet.toXML());
+        // SmackDebugger de = connection.
          // Do something with the incoming packet here.
 //         ConsoleDebugger c;
 //                    c = getReader();
@@ -115,13 +120,14 @@ connection.addPacketListener(myListener, filter);
 //		return subElem.getSubscriptions();
 //            
            // leaf = mgr.createNode("say5");
-           ProviderManager.getInstance().addIQProvider("vCard", "vcard-temp", new IQParser());
+           ProviderManager p = ProviderManager.getInstance();
+        p.addIQProvider("pubsub", "http://jabber.org/protocol/pubsub#owner", new IQParser());
 
-           System.out.println(ProviderManager.getInstance().getIQProviders());
+          
             PubSub request = new PubSub();
 		request.setTo("pubsub.ankurs-macbook-pro.local");
 		request.setType(Type.GET);
-		request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, "say5"));
+		request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, "say2"));
                
 		request.setPubSubNamespace(PubSubNamespace.OWNER);
 		
@@ -166,9 +172,9 @@ connection.addPacketListener(myListener, filter);
 //            node.sendConfigurationForm(form);
 
 //            // Get the node
-             List<Subscription> subscriptions = mgr.getSubscriptions();
+         //    List<Subscription> subscriptions = mgr.getSubscriptions();
            // String snode = subscriptions.get(0).getNode();
-             node = (LeafNode) mgr.getNode("say2");
+          //   node = (LeafNode) mgr.getNode("say2");
              
 //            // Publish an Item with the specified id
 //            node.send(new Item("hello amigos"));
@@ -203,7 +209,7 @@ connection.addPacketListener(myListener, filter);
 //      <pubsub xmlns=’http://jabber.org/protocol/pubsub#owner’>
 //<subscriptions node=’latest_books’/> </pubsub>
       
-           List<Subscription> subscriptionsForNode = node.getSubscriptions();
+      //     List<Subscription> subscriptionsForNode = node.getSubscriptions();
 //            for (int i = 0; i < subscriptionsForNode.size(); i++) {
 //                Subscription subs = (Subscription) subscriptionsForNode.get(i);
 //                String JID = subs.getJid();
@@ -320,21 +326,18 @@ connection.addPacketListener(myListener, filter);
         System.exit(0);
     }
 
-    private void sendPush(List userList, LeafNode node) throws UnsupportedEncodingException, IOException {
+    public static void sendPush(String userList, String node) throws UnsupportedEncodingException, IOException {
       String listString = null;
-        for (Object s : userList)
-{
-    
-    listString += s + ",";
-}
+     String j = userList.substring(0,userList.lastIndexOf(","));
+     System.out.println(j);
         DefaultHttpClient httpclient = new DefaultHttpClient();
 HttpPost httpPost = new HttpPost("http://10.124.4.70:3000/push");
 List <NameValuePair> nvps = new ArrayList <NameValuePair>();
-nvps.add(new BasicNameValuePair("jabber_ids", listString));
-nvps.add(new BasicNameValuePair("node", node.toString()));
+nvps.add(new BasicNameValuePair("jabber_ids", j));
+nvps.add(new BasicNameValuePair("node", node));
 httpPost.setEntity(new UrlEncodedFormEntity(nvps));
 HttpResponse response2 = httpclient.execute(httpPost);
-
+JIDs += "";
 try {
     System.out.println(response2.getStatusLine());
     HttpEntity entity2 = response2.getEntity();
