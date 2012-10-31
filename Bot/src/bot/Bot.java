@@ -22,6 +22,7 @@ import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.PacketCollector;
+import org.jivesoftware.smack.PacketInterceptor;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.Roster.SubscriptionMode;
@@ -30,15 +31,18 @@ import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.debugger.ConsoleDebugger;
 import org.jivesoftware.smack.filter.AndFilter;
 import org.jivesoftware.smack.filter.FromContainsFilter;
 import org.jivesoftware.smack.filter.IQTypeFilter;
 import org.jivesoftware.smack.filter.PacketFilter;
 import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.IQ;
+import org.jivesoftware.smack.packet.IQ.Type;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smackx.ServiceDiscoveryManager;
 import org.jivesoftware.smackx.packet.DiscoverItems;
 import org.jivesoftware.smackx.pubsub.AccessModel;
@@ -48,12 +52,17 @@ import org.jivesoftware.smackx.pubsub.Item;
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
 import org.jivesoftware.smackx.pubsub.LeafNode;
 import org.jivesoftware.smackx.pubsub.Node;
+import org.jivesoftware.smackx.pubsub.NodeExtension;
+import org.jivesoftware.smackx.pubsub.PubSubElementType;
 import org.jivesoftware.smackx.pubsub.PubSubManager;
 import org.jivesoftware.smackx.pubsub.PublishModel;
 import org.jivesoftware.smackx.pubsub.Subscription;
+import org.jivesoftware.smackx.pubsub.SubscriptionsExtension;
 import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
+import org.jivesoftware.smackx.pubsub.packet.PubSub;
+import org.jivesoftware.smackx.pubsub.packet.PubSubNamespace;
 
-public class Bot implements MessageListener, PacketListener {
+public class Bot implements MessageListener, PacketListener, PacketInterceptor{
 
     XMPPConnection connection;
 
@@ -74,7 +83,7 @@ public class Bot implements MessageListener, PacketListener {
             
    // Create a packet filter to listen for new messages from a particular
 // user. We use an AndFilter to combine two other filters.
-PacketFilter filter = new AndFilter(new PacketTypeFilter(Message.class), 
+PacketFilter filter = new AndFilter(new PacketTypeFilter(IQ.class), 
         new FromContainsFilter("pubsub.ankurs-macbook-pro.local"));
 // Assume we've created a Connection name "connection".
 
@@ -83,12 +92,15 @@ PacketCollector myCollector = connection.createPacketCollector(filter);
 // Normally, you'd do something with the collector, like wait for new packets.
 
 // Next, create a packet listener. We use an anonymous inner class for brevity.
-PacketListener myListener = new PacketListener() {
-        public void processPacket(Packet packet) {
-            System.out.println(packet.toXML());
-            // Do something with the incoming packet here.
-        }
-    };
+PacketListener myListener;
+            myListener = new PacketListener() {
+     public void processPacket(Packet packet) {
+         System.out.println(packet);
+         // Do something with the incoming packet here.
+//         ConsoleDebugger c;
+//                    c = getReader();
+     }
+ };
 // Register the listener.
 connection.addPacketListener(myListener, filter); 
 
@@ -96,13 +108,32 @@ connection.addPacketListener(myListener, filter);
 //String pubSubAddress = connection.getServiceName();
 
             PubSubManager mgr = new PubSubManager(connection);
-            
-            //you cant find out all the nodes for ankurs-macbook-pro.local but find out all the users..and then query them for the nodes they have created. 
-            
-            
-            
-            
+             //you cant find out all the nodes for ankurs-macbook-pro.local but find out all the users..and then query them for the nodes they have created. 
+           LeafNode leaf;
+//            PubSub reply = (PubSub)sendPubsubPacket(Type.GET, new NodeExtension(PubSubElementType.SUBSCRIPTIONS_OWNER, getId()), PubSubNamespace.OWNER);
+//		SubscriptionsExtension subElem = (SubscriptionsExtension)reply.getExtension(PubSubElementType.SUBSCRIPTIONS_OWNER);
+//		return subElem.getSubscriptions();
+//            
+           // leaf = mgr.createNode("say5");
+           ProviderManager.getInstance().addIQProvider("vCard", "vcard-temp", new IQParser());
+
+           System.out.println(ProviderManager.getInstance().getIQProviders());
+            PubSub request = new PubSub();
+		request.setTo("pubsub.ankurs-macbook-pro.local");
+		request.setType(Type.GET);
+		request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, "say5"));
+               
+		request.setPubSubNamespace(PubSubNamespace.OWNER);
+		
+                
+//                SubscriptionsExtension subElem = (SubscriptionsExtension)reply.getExtension(PubSubElementType.SUBSCRIPTIONS);
+//                 subElem.getSubscriptions();
+
+		//request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, "say3"));
+                
+                connection.sendPacket(request);
             // Obtain the ServiceDiscoveryManager associated with my Connection
+                
 //      ServiceDiscoveryManager discoManager = ServiceDiscoveryManager.getInstanceFor(connection);
 //      
 //      // Get the items of a given XMPP entity
@@ -120,8 +151,8 @@ connection.addPacketListener(myListener, filter);
 //      }
 
             // Create the node
-            LeafNode leaf;
-          // leaf = mgr.createNode("say3");
+            LeafNode node;
+         //  node = mgr.createNode("say2");
            
 //           mgr.deleteNode("say2");
 //            leaf = mgr.createNode("say2");
@@ -132,24 +163,24 @@ connection.addPacketListener(myListener, filter);
 //            form.setPersistentItems(true);
 //            form.setPublishModel(PublishModel.open);
 //
-//            leaf.sendConfigurationForm(form);
+//            node.sendConfigurationForm(form);
 
-            // Get the node
+//            // Get the node
              List<Subscription> subscriptions = mgr.getSubscriptions();
-            String snode = subscriptions.get(0).getNode();
-            LeafNode node = (LeafNode) mgr.getNode("say2");
-
-            // Publish an Item with the specified id
-            node.send(new Item("hello amigos"));
-            node.addItemEventListener(new ItemEventListener() {
-                @Override
-                public void handlePublishedItems(ItemPublishEvent ipe) {
-                    System.out.println("publish item on test node");
-                }
-            });
-      node.subscribe(connection.getUser());
-      
-      System.out.println(connection.getUser());
+           // String snode = subscriptions.get(0).getNode();
+             node = (LeafNode) mgr.getNode("say2");
+             
+//            // Publish an Item with the specified id
+//            node.send(new Item("hello amigos"));
+//            node.addItemEventListener(new ItemEventListener() {
+//                @Override
+//                public void handlePublishedItems(ItemPublishEvent ipe) {
+//                    System.out.println("publish item on test node");
+//                }
+//            });
+//      node.subscribe(connection.getUser());
+//      
+//      System.out.println(connection.getUser());
 ////      
 //       Collection<String> ids = new ArrayList<String>(3);
 //     ids.add("1");
@@ -267,7 +298,7 @@ connection.addPacketListener(myListener, filter);
 
 
         // Enter your login information here
-        c.login("ankur", "akk322");
+        c.login("bot", "bot");
 
         c.displayBuddyList();
 
@@ -318,6 +349,11 @@ try {
     @Override
     public void processPacket(Packet packet) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void interceptPacket(Packet packet) {
+        System.out.println("fef");
     }
 }
 //node.getSubscriptions gives all the subscribers for the particular node. 
