@@ -93,12 +93,19 @@
     devTok = [devTok stringByReplacingOccurrencesOfString:@" " withString:@""];
     devTok = [devTok stringByReplacingOccurrencesOfString:@"<" withString:@""];
     devTok = [devTok stringByReplacingOccurrencesOfString:@">" withString:@""];
-    CFUUIDRef theUUID = CFUUIDCreate(NULL);
-    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-    CFRelease(theUUID);
-    NSString *device_id = (__bridge NSString *)string;
+
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+     NSString *device_id = [prefs stringForKey:@"device_identifier"];
+    
+    if (device_id == nil) {
+        
+        CFUUIDRef theUUID = CFUUIDCreate(NULL);
+        CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+        CFRelease(theUUID);
+       device_id = (__bridge NSString *)string;
+    }
     // saving a Float
     [prefs setObject:device_id forKey:@"device_identifier"];
     
@@ -106,7 +113,7 @@
     [prefs synchronize];
     
     NSURL *url = [NSURL URLWithString:
-                  @"http://10.124.4.70:3000/device"];
+                  @"http://192.168.0.15:3000/device"];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&device_type=IOS&registration_id=%@",device_id,devTok];
     NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];

@@ -47,19 +47,7 @@
     NSString *spassword = password.text;
     
 	BOOL success = [[[self appDelegate] xmppStream] registerWithPassword:spassword error:&error];
-    
-    XMPPRoster *roster =  [[self appDelegate] xmppRoster ];
-    [roster subscribePresenceToUser:[XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"]];
-    
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:@"registered"];
-    
-    XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"];
-    XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
-    [message addChild:body];
-    
-    XMPPStream *str = [self appDelegate].xmppStream;
-    [str sendElement:message];
-    
+   // I dont want to know the presence of the bot. But want the bot to know when I am available or offline. I ant sent a message until I have conneted with a username and password. 
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     // getting an NSString
@@ -68,7 +56,7 @@
 NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
     
        NSURL *url = [NSURL URLWithString:
-                  @"http://10.124.4.70:3000/user"];
+                  @"http://192.168.0.15:3000/user"];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&jabber_id=%@",device_identifier,myJID];
     NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];
@@ -121,6 +109,13 @@ NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
+{
+	
+	
+	return NO;
+}
+
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
 {
     [self createAccount];
@@ -131,9 +126,11 @@ NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID
     [self setField:username forKey:kXMPPmyJID];
     // [self setField:password forKey:kXMPPmyPassword];
     NSError *error = nil;
-    
-    
-    [[self appDelegate] connect];
+
+    XMPPStream *xmppStream = [self appDelegate].xmppStream;
+    [xmppStream setMyJID:[XMPPJID jidWithString:     [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID]]];
+    [xmppStream disconnect];
+    [xmppStream connect:&error];
     
     [[[self appDelegate] xmppStream ]addDelegate:self delegateQueue:dispatch_get_main_queue()];
     

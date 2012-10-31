@@ -45,12 +45,20 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
     
     [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_current_queue()];
     
-    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
-    
-    //    NSString *subs = [pubsub allItemsForNode:@"hello"];
-    
-    
-    NSString *subs = [pubsub getSubscriptions];
+        XMPPRoster *roster =  [[self appDelegate] xmppRoster ];
+        [roster subscribePresenceToUser:[XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"]];
+    //
+        [roster addDelegate:self delegateQueue:dispatch_get_current_queue()];
+    //
+     NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:@"registered"];
+    //
+        XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"];
+        XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
+        [message addChild:body];
+    //
+        XMPPStream *str = [self appDelegate].xmppStream;
+        [str sendElement:message];
+
     
 
 }

@@ -124,20 +124,20 @@ connection.addPacketListener(myListener, filter);
         p.addIQProvider("pubsub", "http://jabber.org/protocol/pubsub#owner", new IQParser());
 
           
-            PubSub request = new PubSub();
-		request.setTo("pubsub.ankurs-macbook-pro.local");
-		request.setType(Type.GET);
-		request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, "say2"));
-               
-		request.setPubSubNamespace(PubSubNamespace.OWNER);
-		
-                
-//                SubscriptionsExtension subElem = (SubscriptionsExtension)reply.getExtension(PubSubElementType.SUBSCRIPTIONS);
-//                 subElem.getSubscriptions();
-
-		//request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, "say3"));
-                
-                connection.sendPacket(request);
+//            PubSub request = new PubSub();
+//		request.setTo("pubsub.ankurs-macbook-pro.local");
+//		request.setType(Type.GET);
+//		request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, "say2"));
+//               
+//		request.setPubSubNamespace(PubSubNamespace.OWNER);
+//		
+//                
+////                SubscriptionsExtension subElem = (SubscriptionsExtension)reply.getExtension(PubSubElementType.SUBSCRIPTIONS);
+////                 subElem.getSubscriptions();
+//
+//		//request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, "say3"));
+//                
+//                connection.sendPacket(request);
             // Obtain the ServiceDiscoveryManager associated with my Connection
                 
 //      ServiceDiscoveryManager discoManager = ServiceDiscoveryManager.getInstanceFor(connection);
@@ -276,7 +276,14 @@ connection.addPacketListener(myListener, filter);
     public void processMessage(Chat chat, Message message) {
 
         if (message.getType() == Message.Type.chat) {
-            
+            if(message.getBody().equals("registered")){
+               Roster roster = connection.getRoster();
+                try {
+                    roster.createEntry(chat.getParticipant(), chat.getParticipant(), null);
+                } catch (XMPPException ex) {
+                    Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             System.out.println(chat.getParticipant() + " says: " + message.getBody());
             PubSubManager mgr = new PubSubManager(connection);
             int index = message.getBody().indexOf("createnode");
@@ -331,14 +338,14 @@ connection.addPacketListener(myListener, filter);
      String j = userList.substring(0,userList.lastIndexOf(","));
      System.out.println(j);
         DefaultHttpClient httpclient = new DefaultHttpClient();
-HttpPost httpPost = new HttpPost("http://10.124.4.70:3000/push");
+HttpPost httpPost = new HttpPost("http://10.124.4.62:3000/push/push");
 List <NameValuePair> nvps = new ArrayList <NameValuePair>();
 nvps.add(new BasicNameValuePair("jabber_ids", j));
 
 nvps.add(new BasicNameValuePair("node", node));
 httpPost.setEntity(new UrlEncodedFormEntity(nvps));
 HttpResponse response2 = httpclient.execute(httpPost);
-JIDs += "";
+
 try {
     System.out.println(response2.getStatusLine());
     HttpEntity entity2 = response2.getEntity();
