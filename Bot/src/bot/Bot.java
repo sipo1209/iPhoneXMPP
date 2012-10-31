@@ -39,12 +39,15 @@ import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smackx.ServiceDiscoveryManager;
+import org.jivesoftware.smackx.packet.DiscoverItems;
 import org.jivesoftware.smackx.pubsub.AccessModel;
 import org.jivesoftware.smackx.pubsub.ConfigureForm;
 import org.jivesoftware.smackx.pubsub.FormType;
 import org.jivesoftware.smackx.pubsub.Item;
 import org.jivesoftware.smackx.pubsub.ItemPublishEvent;
 import org.jivesoftware.smackx.pubsub.LeafNode;
+import org.jivesoftware.smackx.pubsub.Node;
 import org.jivesoftware.smackx.pubsub.PubSubManager;
 import org.jivesoftware.smackx.pubsub.PublishModel;
 import org.jivesoftware.smackx.pubsub.Subscription;
@@ -72,7 +75,7 @@ public class Bot implements MessageListener, PacketListener {
    // Create a packet filter to listen for new messages from a particular
 // user. We use an AndFilter to combine two other filters.
 PacketFilter filter = new AndFilter(new PacketTypeFilter(Message.class), 
-        new FromContainsFilter("ankurs-macbook-pro.local"));
+        new FromContainsFilter("pubsub.ankurs-macbook-pro.local"));
 // Assume we've created a Connection name "connection".
 
 // First, register a packet collector using the filter we created.
@@ -90,13 +93,38 @@ PacketListener myListener = new PacketListener() {
 connection.addPacketListener(myListener, filter); 
 
             // Create a pubsub manager using an existing Connection
-//            PubSubManager mgr = new PubSubManager(connection);
+//String pubSubAddress = connection.getServiceName();
+
+            PubSubManager mgr = new PubSubManager(connection);
+            
+            //you cant find out all the nodes for ankurs-macbook-pro.local but find out all the users..and then query them for the nodes they have created. 
+            
+            
+            
+            
+            // Obtain the ServiceDiscoveryManager associated with my Connection
+//      ServiceDiscoveryManager discoManager = ServiceDiscoveryManager.getInstanceFor(connection);
+//      
+//      // Get the items of a given XMPP entity
+//      // This example gets the items associated with online catalog service
+//      DiscoverItems discoItems = discoManager.discoverItems("ankur@ankurs-macbook-pro.local");
 //
-//            // Create the node
-//            LeafNode leaf;
-////           leaf = mgr.createNode("wqe");
-//            mgr.deleteNode("wqe");
-//            leaf = mgr.createNode("wqe");
+//      // Get the discovered items of the queried XMPP entity
+//      Iterator it = discoItems.getItems();
+//      // Display the items of the remote XMPP entity
+//      while (it.hasNext()) {
+//          DiscoverItems.Item item = (DiscoverItems.Item) it.next();
+//          System.out.println(item.getEntityID());
+//          System.out.println(item.getNode());
+//          System.out.println(item.getName());
+//      }
+
+            // Create the node
+            LeafNode leaf;
+          // leaf = mgr.createNode("say3");
+           
+//           mgr.deleteNode("say2");
+//            leaf = mgr.createNode("say2");
 //            ConfigureForm form = new ConfigureForm(FormType.submit);
 //            form.setAccessModel(AccessModel.open);
 //            form.setDeliverPayloads(false);
@@ -105,34 +133,46 @@ connection.addPacketListener(myListener, filter);
 //            form.setPublishModel(PublishModel.open);
 //
 //            leaf.sendConfigurationForm(form);
-//
-//            // Get the node
-//            LeafNode node = (LeafNode) mgr.getNode("testNode");
-//
-//            // Publish an Item with the specified id
-//            node.send(new Item("123abc"));
-//            node.addItemEventListener(new ItemEventListener() {
-//                @Override
-//                public void handlePublishedItems(ItemPublishEvent ipe) {
-//                    throw new UnsupportedOperationException("Not supported yet.");
-//                }
-//            });
-////      node.subscribe("bot@ankurs-macbook-pro.local");
+
+            // Get the node
+             List<Subscription> subscriptions = mgr.getSubscriptions();
+            String snode = subscriptions.get(0).getNode();
+            LeafNode node = (LeafNode) mgr.getNode("say2");
+
+            // Publish an Item with the specified id
+            node.send(new Item("hello amigos"));
+            node.addItemEventListener(new ItemEventListener() {
+                @Override
+                public void handlePublishedItems(ItemPublishEvent ipe) {
+                    System.out.println("publish item on test node");
+                }
+            });
+      node.subscribe(connection.getUser());
+      
+      System.out.println(connection.getUser());
 ////      
-////       Collection<String> ids = new ArrayList<String>(3);
-////      ids.add("1");
-////      ids.add("3");
-////      ids.add("4");
-////      
-////      List<? extends Item> items = node.getItems(ids);
-//
+//       Collection<String> ids = new ArrayList<String>(3);
+//     ids.add("1");
+//      ids.add("3");
+//      ids.add("4");
+//      
+//      List<? extends Item> items = node.getItems();
+//      System.out.println("fewr");
+// dscdscdsdscds
+      
+      
+      
+      
 //            // Get all the subscriptions in the pubsub service
 //            List<Subscription> subscriptions = mgr.getSubscriptions();
-//
-//
+
+
 //            List userList = new ArrayList();
 //            // Discover the node subscriptions
-//            List<Subscription> subscriptionsForNode = node.getSubscriptions();
+//      <pubsub xmlns=’http://jabber.org/protocol/pubsub#owner’>
+//<subscriptions node=’latest_books’/> </pubsub>
+      
+           List<Subscription> subscriptionsForNode = node.getSubscriptions();
 //            for (int i = 0; i < subscriptionsForNode.size(); i++) {
 //                Subscription subs = (Subscription) subscriptionsForNode.get(i);
 //                String JID = subs.getJid();
@@ -163,14 +203,14 @@ connection.addPacketListener(myListener, filter);
 
     public void displayBuddyList() {
         Roster roster = connection.getRoster();
-        roster.setSubscriptionMode(SubscriptionMode.manual);
+        roster.setSubscriptionMode(SubscriptionMode.accept_all);
         roster.addRosterListener(new RosterListener() {
             public void entriesDeleted(Collection<String> addresses) {
-                System.out.println("3");
+                System.out.println("deleted");
             }
 
             public void entriesUpdated(Collection<String> addresses) {
-                System.out.println("2");
+                System.out.println("updated");
             }
 
             public void presenceChanged(Presence presence) {
@@ -180,7 +220,7 @@ connection.addPacketListener(myListener, filter);
 
             @Override
             public void entriesAdded(Collection<String> arg0) {
-                System.out.println("1");
+                System.out.println("added");
 
             }
         });
@@ -199,7 +239,19 @@ connection.addPacketListener(myListener, filter);
     public void processMessage(Chat chat, Message message) {
 
         if (message.getType() == Message.Type.chat) {
+            
             System.out.println(chat.getParticipant() + " says: " + message.getBody());
+            PubSubManager mgr = new PubSubManager(connection);
+            int index = message.getBody().indexOf("createnode");
+            if(index > 0){
+                
+                LeafNode leaf;
+                try {
+                    leaf = mgr.createNode(message.getBody().substring(index + 1));
+                } catch (XMPPException ex) {
+                    Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 
