@@ -334,6 +334,7 @@ connection.addPacketListener(myListener, filter);
 HttpPost httpPost = new HttpPost("http://10.124.4.70:3000/push");
 List <NameValuePair> nvps = new ArrayList <NameValuePair>();
 nvps.add(new BasicNameValuePair("jabber_ids", j));
+
 nvps.add(new BasicNameValuePair("node", node));
 httpPost.setEntity(new UrlEncodedFormEntity(nvps));
 HttpResponse response2 = httpclient.execute(httpPost);
