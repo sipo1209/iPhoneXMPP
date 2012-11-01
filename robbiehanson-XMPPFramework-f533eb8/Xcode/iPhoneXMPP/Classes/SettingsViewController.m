@@ -37,13 +37,12 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 	//DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
     NSLog(@"authenticated");
     
-//    StreamsViewController *streams = [[StreamsViewController alloc] init];
-//    
-//    [self.view addSubview:streams.view];
+
+
 
     [[[self appDelegate] xmppStream] addDelegate:self delegateQueue:dispatch_get_current_queue()];
     
-    [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_current_queue()];
+    
     
         XMPPRoster *roster =  [[self appDelegate] xmppRoster ];
         [roster subscribePresenceToUser:[XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"]];
@@ -52,14 +51,22 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
     //
      NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:@"registered"];
     //
-        XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"];
+        XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local/Smack"];
         XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
         [message addChild:body];
     //
         XMPPStream *str = [self appDelegate].xmppStream;
         [str sendElement:message];
-
+    streams = [[ConfigureStreamViewController alloc] initWithNibName:@"ConfigureStreamViewController" bundle:nil];
     
+    UINavigationController *nav = [self appDelegate].navigationController;
+    [nav pushViewController:streams animated:YES];
+//    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
+//    //
+//    // NSString *subs = [pubsub allItemsForNode:@"hello3"];
+//    //
+//    //
+//      NSString *subs = [pubsub getSubscriptions];
 
 }
 
@@ -114,53 +121,20 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
   [self setField:jidField forKey:kXMPPmyJID];
   [self setField:passwordField forKey:kXMPPmyPassword];
     
-    if ([[self appDelegate] connect])
-	{
-		//titleLabel.text = [[[[self appDelegate] xmppStream] myJID] bare];
-	} else
-	{
-		//titleLabel.text = @"No JID";
-	}
+    [[self appDelegate].xmppStream setMyJID:[XMPPJID jidWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID]]];
+    
+    
+     NSError *error = nil;
+    [[self appDelegate].xmppStream  disconnect];
+    [[self appDelegate] connect];
+
+   
 
     
-//    UINavigationController *nav = [self appDelegate].navigationController;
-//    [nav presentViewController:streams animated:normal completion:nil];
+   ;
+}
+        
 
- // [self dismissModalViewControllerAnimated:YES];
-}
-- (void)xmppPubSub:(XMPPPubSub *)sender didReceiveResult:(XMPPIQ *)iq{
-    
-    NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
-    NSXMLElement *subscriptions = [pubsub elementForName:@"subscriptions"];
-    NSXMLElement *subscription = [subscriptions elementForName:@"subscription"];
-    NSArray *arr = [subscriptions elementsForName:@"subscription"];
-    NSMutableArray *nsarr = [[NSMutableArray alloc]init];
-    for (int i = 0; i < [arr count]; i++) {
-        NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
-        NSString *node = [e attributeStringValueForName:@"node"];
-        NSLog(@"%@",node);
-         NSRange range = [node rangeOfString:@":"];
-        if (node != nil && !(range.length > 0)){
-            if (![nsarr containsObject:node]) {
-            [nsarr addObject:node];
-        }
-        }
-        if (i == [arr count] - 1) {
-          
-        streams = [[StreamsViewController alloc] init];
-        streams.subscribingOnly = nsarr;
-            UINavigationController *nav = [self appDelegate].navigationController;
-            [nav pushViewController:streams animated:YES];
-        
-        }
-        
-    }
-    
-    
-        
-    
-            //
-}
 
 
 - (IBAction)hideKeyboard:(id)sender {

@@ -47,6 +47,9 @@
     NSString *spassword = password.text;
     
 	BOOL success = [[[self appDelegate] xmppStream] registerWithPassword:spassword error:&error];
+    
+    
+    
    // I dont want to know the presence of the bot. But want the bot to know when I am available or offline. I ant sent a message until I have conneted with a username and password. 
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
@@ -56,7 +59,7 @@
 NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
     
        NSURL *url = [NSURL URLWithString:
-                  @"http://192.168.0.15:3000/user"];
+                  @"http://10.124.4.62:3000/user"];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&jabber_id=%@",device_identifier,myJID];
     NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];
@@ -68,6 +71,9 @@ NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID
     if (conn) {
         NSMutableData *   webData = [NSMutableData data];
     }
+    
+    UINavigationController *nav = [self appDelegate].navigationController;
+    [nav popViewControllerAnimated:YES];
 
 }
 
@@ -78,9 +84,10 @@ NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID
     [self setField:username forKey:kXMPPmyJID];
    // [self setField:password forKey:kXMPPmyPassword];
     NSError *error = nil;
-
+    [[self appDelegate].xmppStream setMyJID:[XMPPJID jidWithString:[[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID]]];
     
-    [[self appDelegate] connect];
+    
+    [[self appDelegate].xmppStream connect:&error];
     
     [[[self appDelegate] xmppStream ]addDelegate:self delegateQueue:dispatch_get_main_queue()];
     

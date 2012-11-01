@@ -113,7 +113,7 @@
     [prefs synchronize];
     
     NSURL *url = [NSURL URLWithString:
-                  @"http://192.168.0.15:3000/device"];
+                  @"http://10.124.4.62:3000/device"];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&device_type=IOS&registration_id=%@",device_id,devTok];
     NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];
@@ -574,42 +574,42 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 	return NO;
 }
 
-- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
-{
-	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-
-	// A simple example of inbound message handling.
-
-	if ([message isChatMessageWithBody])
-	{
-		XMPPUserCoreDataStorageObject *user = [xmppRosterStorage userForJID:[message from]
-		                                                         xmppStream:xmppStream
-		                                               managedObjectContext:[self managedObjectContext_roster]];
-		
-		NSString *body = [[message elementForName:@"body"] stringValue];
-		NSString *displayName = [user displayName];
-
-		if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-		{
-			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
-															  message:body 
-															 delegate:nil 
-													cancelButtonTitle:@"Ok" 
-													otherButtonTitles:nil];
-			[alertView show];
-		}
-		else
-		{
-			// We are not active, so use a local notification instead
-			UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-			localNotification.alertAction = @"Ok";
-			localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
-
-			[[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-		}
-	}
-}
-
+//- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
+//{
+//	DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+//
+//	// A simple example of inbound message handling.
+//
+//	if ([message isChatMessageWithBody])
+//	{
+//		XMPPUserCoreDataStorageObject *user = [xmppRosterStorage userForJID:[message from]
+//		                                                         xmppStream:xmppStream
+//		                                               managedObjectContext:[self managedObjectContext_roster]];
+//		
+//		NSString *body = [[message elementForName:@"body"] stringValue];
+//		NSString *displayName = [user displayName];
+//
+//		if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
+//		{
+//			UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
+//															  message:body 
+//															 delegate:nil 
+//													cancelButtonTitle:@"Ok" 
+//													otherButtonTitles:nil];
+//			[alertView show];
+//		}
+//		else
+//		{
+//			// We are not active, so use a local notification instead
+//			UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//			localNotification.alertAction = @"Ok";
+//			localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
+//
+//			[[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+//		}
+//	}
+//}
+//
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
 	DDLogVerbose(@"%@: %@ - %@", THIS_FILE, THIS_METHOD, [presence fromStr]);

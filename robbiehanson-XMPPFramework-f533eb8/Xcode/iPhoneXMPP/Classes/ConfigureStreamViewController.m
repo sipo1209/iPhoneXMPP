@@ -15,7 +15,7 @@
 @end
 
 @implementation ConfigureStreamViewController
-
+@synthesize streams,create,subscribe;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -44,16 +44,27 @@
     // e.g. self.myOutlet = nil;
 }
 
+-(IBAction)streams:(id)sender{
+    [[[self appDelegate] xmppStream] addDelegate:self delegateQueue:dispatch_get_current_queue()];
+   
+    [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_current_queue()];
+    
+        XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
+   
+          NSString *subs = [pubsub getSubscriptions];
+}
 
 
 -(IBAction)publishNewStream:(id)sender{
-    CreateNodeForPublishingViewController *create = [[CreateNodeForPublishingViewController alloc]init];
-    [self.view addSubview:create.view];
+    create = [[CreateNodeForPublishingViewController alloc]init];
+    UINavigationController *nav = [self appDelegate].navigationController;
+    [nav pushViewController:create animated:YES];
 }
 
 -(IBAction)subscribeNewStream:(id)sender{
-    SubscribeToNodeViewController *subscribe = [[SubscribeToNodeViewController alloc] init];
-    [self.view addSubview:subscribe.view];
+    subscribe = [[SubscribeToNodeViewController alloc] init];
+    UINavigationController *nav = [self appDelegate].navigationController;
+    [nav pushViewController:subscribe animated:YES];
 }
 
 
@@ -61,5 +72,48 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+- (void)xmppPubSub:(XMPPPubSub *)sender didReceiveResult:(XMPPIQ *)iq{
+    
+    NSXMLElement *pubsub = [iq elementForName:@"pubsub"] ;
+    NSXMLElement *subscriptions = [pubsub elementForName:@"subscriptions"];
+    NSXMLElement *subscription = [subscriptions elementForName:@"subscription"];
+    NSArray *arr = [subscriptions elementsForName:@"subscription"];
+    NSMutableArray *nsarr = [[NSMutableArray alloc]init];
+    streams = [[StreamsViewController alloc] initWithNibName:@"StreamsViewController" bundle:nil];
+    if ([arr count] == 0) {
+       
+        UINavigationController *nav = [self appDelegate].navigationController;
+        [nav pushViewController:streams animated:YES];
+    }
+    for (int i = 0; i < [arr count]; i++) {
+        NSXMLElement *e = (NSXMLElement *)[arr objectAtIndex:i];
+        NSString *node = [e attributeStringValueForName:@"node"];
+//        [sender deleteNode:node];
+        NSLog(@"%@",node);
+        NSRange range = [node rangeOfString:@":"];
+        if (node != nil && !(range.length > 0)){
+            if (![nsarr containsObject:node]) {
+                [nsarr addObject:node];
+            }
+        }
+        if (i == [arr count] - 1) {
+            
+            //  streams = [[StreamsViewController alloc] init];
+              streams.subscribingOnly = nsarr;
+            UINavigationController *nav = [self appDelegate].navigationController;
+            [nav pushViewController:streams animated:YES];
+            
+        }
+        
+    }
+    
+    
+    
+    
+    //
+}
+
+
 
 @end

@@ -74,14 +74,20 @@
     tvView.text = (NSString *)items;
 
 }
-
+- (IBAction)hideKeyboard:(id)sender {
+    [sender resignFirstResponder];
+    
+}
 
 -(IBAction)publish:(id)sender{
-    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
-    NSXMLElement * item = [NSXMLElement elementWithName:@"entry" stringValue:@"hi"];
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:textField.text];
-       
-    [pubsub publishToNode:stream entry:item];
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:[NSString stringWithFormat:@"publish %@ %@",stream,textField.text]];
+    
+    XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"];
+    XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
+    [message addChild:body];
+    
+    XMPPStream *str = [self appDelegate].xmppStream;
+    [str sendElement:message];
 
     [self getItems];
 }

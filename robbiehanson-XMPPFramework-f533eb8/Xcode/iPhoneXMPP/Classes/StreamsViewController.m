@@ -22,7 +22,6 @@
 @synthesize subscribingOnly;
 @synthesize tableView;
 @synthesize stream;
-@synthesize configure;
 @synthesize home;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,8 +35,8 @@
 
 - (void)viewDidLoad
 {
-    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@""
-                                                                       style:UIBarButtonSystemItemAdd target:self action:@selector(configure1:)];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@"done"
+                                                                       style:UIBarButtonItemStyleDone target:self action:@selector(configure1:)];
     self.navigationItem.rightBarButtonItem = settingsButton;
    
     [super viewDidLoad];
@@ -67,12 +66,7 @@
 
 
 
--(IBAction)configure1:(id)sender{
-    configure = [[ConfigureStreamViewController alloc]init];
-    
-    [self.view addSubview:configure.view];
 
-   }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)sectionIndex

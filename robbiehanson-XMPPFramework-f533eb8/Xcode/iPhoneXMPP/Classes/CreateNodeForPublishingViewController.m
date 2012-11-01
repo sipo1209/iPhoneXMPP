@@ -42,10 +42,11 @@
 }
 
 -(IBAction)createNode:(id)sender{
-    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
-    [pubsub createNode:create.text withOptions:nil];
+    [[[self appDelegate] xmppStream] addDelegate:self delegateQueue:dispatch_get_current_queue()];
     
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:[NSString stringWithFormat:@"createnode %@",create.text]];
+    [[[self appDelegate] xmppPubSub] addDelegate:self delegateQueue:dispatch_get_current_queue()];
+     
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:[NSString stringWithFormat:@"create %@",create.text]];
     
     XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"];
     XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
@@ -55,9 +56,18 @@
     [str sendElement:message];
 }
 
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
+{
+	    
+    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
+    [pubsub subscribeToNode:create.text withOptions:nil];
+}
+
 
 @end
