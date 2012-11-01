@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    tvView.text = (NSString *)items;
+   
     
     XMPPPubSub *pubsub = [[self appDelegate]xmppPubSub];
     
@@ -65,18 +65,24 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
--(void)getItems{
-    
-    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
-    
-    NSXMLElement *items = (NSXMLElement *)[pubsub allItemsForNode:stream];
-    
-    tvView.text = (NSString *)items;
 
-}
 - (IBAction)hideKeyboard:(id)sender {
     [sender resignFirstResponder];
     
+}
+
+- (BOOL)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)book
+{
+    NSString *textString = tvView.text;
+    for (int i = 0; i < [book childCount]; i++) {
+        DDXMLNode *node = [book childAtIndex:i];
+        NSString *name = [node name];
+        NSString *value = [node stringValue];
+        textString = [textString stringByAppendingFormat:@"\n%@",value];
+        break;
+    }
+	tvView.text = textString;
+	return NO;
 }
 
 -(IBAction)publish:(id)sender{
@@ -89,6 +95,6 @@
     XMPPStream *str = [self appDelegate].xmppStream;
     [str sendElement:message];
 
-    [self getItems];
+   
 }
 @end

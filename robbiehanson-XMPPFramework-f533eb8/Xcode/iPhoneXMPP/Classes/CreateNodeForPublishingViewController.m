@@ -67,6 +67,11 @@
 	    
     XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
     [pubsub subscribeToNode:create.text withOptions:nil];
+    
+    [[[self appDelegate] xmppStream] removeDelegate:self delegateQueue:dispatch_get_current_queue()];
+    
+    [[[self appDelegate] xmppPubSub] removeDelegate:self delegateQueue:dispatch_get_current_queue()];
+
 }
 
 

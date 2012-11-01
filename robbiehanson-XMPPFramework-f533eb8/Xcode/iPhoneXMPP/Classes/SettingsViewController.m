@@ -79,10 +79,7 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 
 
 
-- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
-{
-	NSLog(@"recieved");
-}
+
 
 
 

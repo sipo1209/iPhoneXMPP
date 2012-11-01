@@ -118,13 +118,21 @@ public class Bot implements MessageListener, PacketListener, PacketInterceptor {
                         int index = message.getBody().indexOf("create");
                         if (index >= 0) {
                             int i = message.getBody().indexOf(" ");
-                            Node leaf;
+                            LeafNode leaf;
                             try {
+                                System.out.println(message.getBody().substring(i + 1)+"|");
                                 leaf = mgr.createNode(message.getBody().substring(i + 1));
+                                 ConfigureForm form = new ConfigureForm(FormType.submit);
+      form.setAccessModel(AccessModel.open);
+      form.setDeliverPayloads(true);
+      form.setNotifyRetract(true);
+      form.setPersistentItems(true);
+      form.setPublishModel(PublishModel.open);
+      
+      leaf.sendConfigurationForm(form);
                                 sendMessage(message.getBody(), packet.getFrom());
                                 leaf.addItemEventListener(new ItemEventCoordinator());
-                                leaf.subscribe(connection.getUser());
-
+                           
                             } catch (XMPPException ex) {
                                 Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -134,13 +142,13 @@ public class Bot implements MessageListener, PacketListener, PacketInterceptor {
                         if (index1 >= 0) {
                             int i = message.getBody().indexOf(" ");
                             int j = message.getBody().lastIndexOf(" ");
-                            System.out.println(message.getBody().substring(i+1,j));
                             LeafNode leaf;
                             try {
                                 leaf = (LeafNode)mgr.getNode(message.getBody().substring(i+1,j));
-                                leaf.send(new Item(message.getBody().substring(j+1)));
+                                leaf.send(new PayloadItem(message.getBody().substring(j+1), 
+          new SimplePayload(message.getBody().substring(j+1)+"1", "pubsub:test:book"+"2",  "<title>"+message.getBody().substring(j+1)+"</title>")));//message.getBody().substring(j+1))
                             } catch (XMPPException ex) {
-                                Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
+                              ex.printStackTrace();
                             }
                         }
                     }
@@ -196,27 +204,23 @@ public class Bot implements MessageListener, PacketListener, PacketInterceptor {
 //          System.out.println(item.getName());
 //      }
 
-            // Create the node
-//            LeafNode node;
-//           node = (LeafNode)mgr.getNode("say2");
-//           node.addItemEventListener(new ItemEventCoordinator());
-//      node.subscribe(connection.getUser());
-//           node.send(new PayloadItem("test" + System.currentTimeMillis(), 
-//          new SimplePayload("book", "pubsub:test:book", "edefw")));
-
-//           mgr.deleteNode("say2");
-//            leaf = mgr.createNode("say2");
-//            ConfigureForm form = new ConfigureForm(FormType.submit);
-//            form.setAccessModel(AccessModel.open);
-//            form.setDeliverPayloads(false);
-//            form.setNotifyRetract(true);
-//            form.setPersistentItems(true);
-//            form.setPublishModel(PublishModel.open);
-//
-//            node.sendConfigurationForm(form);
-
-//            // Get the node
-            List<Subscription> subscriptions = mgr.getSubscriptions();
+             //Create the node
+             
+      // Get the node
+     
+      // Create the node
+//      LeafNode leaf = mgr.createNode("tesvcvcxvxztNode");
+//      ConfigureForm form = new ConfigureForm(FormType.submit);
+//      form.setAccessModel(AccessModel.open);
+//      form.setDeliverPayloads(false);
+//      form.setNotifyRetract(true);
+//      form.setPersistentItems(true);
+//      form.setPublishModel(PublishModel.open);
+//      
+//      leaf.sendConfigurationForm(form);
+//            leaf.send(new Item("p"));
+////            // Get the node
+//            List<Subscription> subscriptions = mgr.getSubscriptions();
 
 
 
@@ -271,9 +275,14 @@ public class Bot implements MessageListener, PacketListener, PacketInterceptor {
 
         @Override
         public void handlePublishedItems(ItemPublishEvent items) {
-            System.out.println("Item count: " + items.getItems());
+            
+            List<Item> itemsList = items.getItems();
+            for(int i=0;i<itemsList.size();i++){
+                System.out.println((((Item)itemsList.get(i))).toXML());
             System.out.println(items.toString());
-
+            }
+            
+              
 //               PubSub request = new PubSub();
 //		request.setTo("pubsub.ankurs-macbook-pro.local");
 //		request.setType(Type.GET);
