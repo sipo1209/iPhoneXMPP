@@ -35,9 +35,7 @@
 
 - (void)viewDidLoad
 {
-    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@"done"
-                                                                       style:UIBarButtonItemStyleDone target:self action:@selector(configure1:)];
-    self.navigationItem.rightBarButtonItem = settingsButton;
+   
    
     [super viewDidLoad];
    

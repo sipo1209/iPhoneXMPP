@@ -120,35 +120,67 @@ public class Bot implements MessageListener, PacketListener, PacketInterceptor {
                             int i = message.getBody().indexOf(" ");
                             LeafNode leaf;
                             try {
-                                System.out.println(message.getBody().substring(i + 1)+"|");
+                                System.out.println(message.getBody().substring(i + 1) + "|");
                                 leaf = mgr.createNode(message.getBody().substring(i + 1));
-                                 ConfigureForm form = new ConfigureForm(FormType.submit);
-      form.setAccessModel(AccessModel.open);
-      form.setDeliverPayloads(true);
-      form.setNotifyRetract(true);
-      form.setPersistentItems(true);
-      form.setPublishModel(PublishModel.open);
-      
-      leaf.sendConfigurationForm(form);
+                                ConfigureForm form = new ConfigureForm(FormType.submit);
+                                form.setAccessModel(AccessModel.open);
+                                form.setDeliverPayloads(true);
+                                form.setNotifyRetract(true);
+                                form.setPersistentItems(true);
+                                form.setPublishModel(PublishModel.open);
+
+                                leaf.sendConfigurationForm(form);
                                 sendMessage(message.getBody(), packet.getFrom());
                                 leaf.addItemEventListener(new ItemEventCoordinator());
-                           
+
                             } catch (XMPPException ex) {
                                 Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                        
-                         int index1 = message.getBody().indexOf("publish");
+
+                        int index1 = message.getBody().indexOf("publish");
                         if (index1 >= 0) {
                             int i = message.getBody().indexOf(" ");
                             int j = message.getBody().lastIndexOf(" ");
                             LeafNode leaf;
                             try {
-                                leaf = (LeafNode)mgr.getNode(message.getBody().substring(i+1,j));
-                                leaf.send(new PayloadItem(message.getBody().substring(j+1), 
-          new SimplePayload(message.getBody().substring(j+1)+"1", "pubsub:test:book"+"2",  "<title>"+message.getBody().substring(j+1)+"</title>")));//message.getBody().substring(j+1))
+                                leaf = (LeafNode) mgr.getNode(message.getBody().substring(i + 1, j));
+                                leaf.send(new PayloadItem(message.getBody().substring(j + 1),
+                                        new SimplePayload(message.getBody().substring(j + 1) + "1", "pubsub:test:book" + "2", "<title>" + message.getBody().substring(j + 1) + "</title>")));//message.getBody().substring(j+1))
+                            
+                                PubSub request = new PubSub();
+		request.setTo("pubsub.ankurs-macbook-pro.local");
+		request.setType(Type.GET);
+		request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, leaf.getId()));
+               
+		request.setPubSubNamespace(PubSubNamespace.OWNER);
+		               
+                connection.sendPacket(request);
+                                
+                                
+//                                List<Subscription> subscriptionsForNode = leaf.getSubscriptions();
+//                                List<String> userList = new ArrayList();
+//                                for (int k = 0; k < subscriptionsForNode.size(); k++) {
+//                                    Subscription subs = (Subscription) subscriptionsForNode.get(k);
+//                                    String JID = subs.getJid();
+//                                    if (!userList.contains(JID)) {
+//                                        userList.add(JID);
+//                                    }
+//                                    String listString = "";
+//                                    for (String s : userList) {
+//                                        listString += s + "\t";
+//                                    }
+//                                    try {
+//                                        sendPush(listString, leaf.getId());
+//                                    } catch (UnsupportedEncodingException ex) {
+//                                        Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
+//                                    } catch (IOException ex) {
+//                                        Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
+//                                    }
+//
+//                                }
                             } catch (XMPPException ex) {
-                              ex.printStackTrace();
+                                ex.printStackTrace();
                             }
                         }
                     }
@@ -204,11 +236,11 @@ public class Bot implements MessageListener, PacketListener, PacketInterceptor {
 //          System.out.println(item.getName());
 //      }
 
-             //Create the node
-             
-      // Get the node
-     
-      // Create the node
+            //Create the node
+
+            // Get the node
+
+            // Create the node
 //      LeafNode leaf = mgr.createNode("tesvcvcxvxztNode");
 //      ConfigureForm form = new ConfigureForm(FormType.submit);
 //      form.setAccessModel(AccessModel.open);
@@ -275,14 +307,14 @@ public class Bot implements MessageListener, PacketListener, PacketInterceptor {
 
         @Override
         public void handlePublishedItems(ItemPublishEvent items) {
-            
+
             List<Item> itemsList = items.getItems();
-            for(int i=0;i<itemsList.size();i++){
-                System.out.println((((Item)itemsList.get(i))).toXML());
-            System.out.println(items.toString());
+            for (int i = 0; i < itemsList.size(); i++) {
+                System.out.println((((Item) itemsList.get(i))).toXML());
+                System.out.println(items.toString());
             }
-            
-              
+
+
 //               PubSub request = new PubSub();
 //		request.setTo("pubsub.ankurs-macbook-pro.local");
 //		request.setType(Type.GET);
