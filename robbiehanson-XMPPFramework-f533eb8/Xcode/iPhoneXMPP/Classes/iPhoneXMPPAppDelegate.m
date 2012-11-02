@@ -130,21 +130,13 @@
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSString *message = nil;
-    id alert = [userInfo objectForKey:@"alert"];
-    if ([alert isKindOfClass:[NSString class]]) {
-        message = alert;
-    } else if ([alert isKindOfClass:[NSDictionary class]]) {
-        message = [alert objectForKey:@"body"];
-    }
-    if (alert) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Title"
-                                                            message:@"AThe message."  delegate:self
-                                                  cancelButtonTitle:@"button 1"
-                                                  otherButtonTitles:@"button", nil];
-        [alertView show];
-       
-    }
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"updateRoot"
+     object:nil
+     userInfo:userInfo];
+    
+   
 }
 
 

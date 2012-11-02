@@ -22,7 +22,38 @@
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(updateView:)
+     name:@"updateRoot"
+     object:nil];
+}
 
+-(void)updateView:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *message = nil;
+    NSString* node = [userInfo valueForKey:@"node"] ;
+    
+    
+    
+    id alert = [userInfo objectForKey:@"alert"];
+    if ([alert isKindOfClass:[NSString class]]) {
+        message = alert;
+    } else if ([alert isKindOfClass:[NSDictionary class]]) {
+        message = [alert objectForKey:@"body"];
+    }
+    
+    stream = node;
+    XMPPPubSub *pubsub = [[self appDelegate]xmppPubSub];
+    NSString *items = [pubsub allItemsForNode:node];
+    NSString *textString = tvView.text;
+   
+    textString = [textString stringByAppendingFormat:@"\n%@",node];
+       
+	tvView.text = textString;
+   
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
