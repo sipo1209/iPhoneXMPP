@@ -28,7 +28,7 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 -(void)viewDidLoad{
-    	[[[self appDelegate]xmppStream] addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    	[[[self appDelegate]xmppStream] addDelegate:self delegateQueue:dispatch_get_current_queue()];
     	
 }
 
@@ -130,7 +130,7 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
     
    ;
 }
-        
+
 
 
 

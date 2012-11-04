@@ -57,7 +57,7 @@ public class IQParser extends PubSubProvider {
             } else if (eventType == XmlPullParser.END_TAG) {
                 System.out.println("end tag " + parser.getName());
                 if (parser.getName().equals("pubsub")) {
-                    Bot.sendPush(j, node);
+                    //Bot.sendPush(j, node);
                     done = true;
                 }
 //              if(parser.getName().equals("iq")){

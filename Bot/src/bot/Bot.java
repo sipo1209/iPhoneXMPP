@@ -68,9 +68,9 @@ import org.jivesoftware.smackx.pubsub.packet.PubSubNamespace;
 import org.xmlpull.mxp1.MXParser;
 import org.xmlpull.v1.XmlPullParser;
 
-public class Bot implements MessageListener, PacketListener{
+public class Bot implements MessageListener, PacketListener {
 
-    public  XMPPConnection connection;
+    public XMPPConnection connection;
     public static String JIDs;
 
     public void login(String userName, String password) throws XMPPException {
@@ -104,7 +104,7 @@ public class Bot implements MessageListener, PacketListener{
             // leaf = mgr.createNode("say5");
             ProviderManager p = ProviderManager.getInstance();
             p.addIQProvider("pubsub", "http://jabber.org/protocol/pubsub#owner", new IQParser());
-          
+
 
 //            PubSub request = new PubSub();
 //		request.setTo("pubsub.ankurs-macbook-pro.local");
@@ -203,66 +203,66 @@ public class Bot implements MessageListener, PacketListener{
 
     @Override
     public void processPacket(Packet packet) {
-        Message message = (Message)packet;
+        Message message = (Message) packet;
         if (message.getType() == Message.Type.chat) {
-                        if (message.getBody().equals("registered")) {
-                            Roster roster = connection.getRoster();
-                            try {
-                                roster.createEntry(message.getFrom(), message.getFrom(), null);
-                            } catch (XMPPException ex) {
-                                Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                        System.out.println(message.getFrom() + " says: " + message.getBody());
-                        PubSubManager mgr = new PubSubManager(connection);
-                        int index = message.getBody().indexOf("create");
-                        if (index >= 0) {
-                            int i = message.getBody().indexOf(" ");
-                            LeafNode leaf;
-                            try {
-                                System.out.println(message.getBody().substring(i + 1) + "|");
-                                leaf = mgr.createNode(message.getBody().substring(i + 1));
-                                ConfigureForm form = new ConfigureForm(FormType.submit);
-                                form.setAccessModel(AccessModel.open);
-                                form.setDeliverPayloads(true);
-                                form.setNotifyRetract(true);
-                                form.setPersistentItems(true);
-                                form.setPublishModel(PublishModel.open);
+            if (message.getBody().equals("registered")) {
+                Roster roster = connection.getRoster();
+                try {
+                    roster.createEntry(message.getFrom(), message.getFrom(), null);
+                } catch (XMPPException ex) {
+                    Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            System.out.println(message.getFrom() + " says: " + message.getBody());
+            PubSubManager mgr = new PubSubManager(connection);
+            int index = message.getBody().indexOf("create");
+            if (index >= 0) {
+                int i = message.getBody().indexOf(" ");
+                LeafNode leaf;
+                try {
+                    System.out.println(message.getBody().substring(i + 1) + "|");
+                    leaf = mgr.createNode(message.getBody().substring(i + 1));
+                    ConfigureForm form = new ConfigureForm(FormType.submit);
+                    form.setAccessModel(AccessModel.open);
+                    form.setDeliverPayloads(true);
+                    form.setNotifyRetract(true);
+                    form.setPersistentItems(true);
+                    form.setPublishModel(PublishModel.open);
 
-                                leaf.sendConfigurationForm(form);
-                                sendMessage(message.getBody(), message.getFrom());
-                                leaf.addItemEventListener(new ItemEventCoordinator());
+                    leaf.sendConfigurationForm(form);
+                    sendMessage(message.getBody(), message.getFrom());
+                    leaf.addItemEventListener(new ItemEventCoordinator());
 
-                            } catch (XMPPException ex) {
-                                Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
+                } catch (XMPPException ex) {
+                    Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
 
-                        int index1 = message.getBody().indexOf("publish");
-                        if (index1 >= 0) {
-                            int i = message.getBody().indexOf(" ");
-                            int j = message.getBody().lastIndexOf(" ");
-                            LeafNode leaf;
-                            try {
-                                leaf = (LeafNode) mgr.getNode(message.getBody().substring(i + 1, j));
-                                leaf.send(new PayloadItem(message.getBody().substring(j + 1),
-                                        new SimplePayload(message.getBody().substring(j + 1), "pubsub:event", "<title>" + message.getFrom() + ": " + message.getBody().substring(j + 1) + "</title>")));//message.getBody().substring(j+1))
+            int index1 = message.getBody().indexOf("publish");
+            if (index1 >= 0) {
+                int i = message.getBody().indexOf(" ");
+                int j = message.getBody().lastIndexOf(" ");
+                LeafNode leaf;
+                try {
+                    leaf = (LeafNode) mgr.getNode(message.getBody().substring(i + 1, j));
+                    leaf.send(new PayloadItem(message.getBody().substring(j + 1),
+                            new SimplePayload(message.getBody().substring(j + 1), "pubsub:event", "<title>" + message.getFrom() + ": " + message.getBody().substring(j + 1) + "</title>")));//message.getBody().substring(j+1))
 
-                                PubSub request = new PubSub();
-                                request.setTo("pubsub.ankurs-macbook-pro.local");
-                                request.setType(Type.GET);
-                                request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, leaf.getId()));
+                    PubSub request = new PubSub();
+                    request.setTo("pubsub.ankurs-macbook-pro.local");
+                    request.setType(Type.GET);
+                    request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, leaf.getId()));
 
-                                request.setPubSubNamespace(PubSubNamespace.OWNER);
+                    request.setPubSubNamespace(PubSubNamespace.OWNER);
 
-                                connection.sendPacket(request);
+                    connection.sendPacket(request);
 
 
-                            } catch (XMPPException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    }
+                } catch (XMPPException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
     }
 
     class ItemEventCoordinator implements ItemEventListener {
@@ -328,69 +328,68 @@ public class Bot implements MessageListener, PacketListener{
     }
 
     public void processMessage(Chat chat, Message message) {
-        
-
-                    if (message.getType() == Message.Type.chat) {
-                        if (message.getBody().equals("registered")) {
-                            Roster roster = connection.getRoster();
-                            try {
-                                roster.createEntry(message.getFrom(), message.getFrom(), null);
-                            } catch (XMPPException ex) {
-                                Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                        System.out.println(message.getFrom() + " says: " + message.getBody());
-                        PubSubManager mgr = new PubSubManager(connection);
-                        int index = message.getBody().indexOf("create");
-                        if (index >= 0) {
-                            int i = message.getBody().indexOf(" ");
-                            LeafNode leaf;
-                            try {
-                                System.out.println(message.getBody().substring(i + 1) + "|");
-                                leaf = mgr.createNode(message.getBody().substring(i + 1));
-                                ConfigureForm form = new ConfigureForm(FormType.submit);
-                                form.setAccessModel(AccessModel.open);
-                                form.setDeliverPayloads(true);
-                                form.setNotifyRetract(true);
-                                form.setPersistentItems(true);
-                                form.setPublishModel(PublishModel.open);
-
-                                leaf.sendConfigurationForm(form);
-                                sendMessage(message.getBody(), message.getFrom());
-                                leaf.addItemEventListener(new ItemEventCoordinator());
-
-                            } catch (XMPPException ex) {
-                                Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-
-                        int index1 = message.getBody().indexOf("publish");
-                        if (index1 >= 0) {
-                            int i = message.getBody().indexOf(" ");
-                            int j = message.getBody().lastIndexOf(" ");
-                            LeafNode leaf;
-                            try {
-                                leaf = (LeafNode) mgr.getNode(message.getBody().substring(i + 1, j));
-                                leaf.send(new PayloadItem(message.getBody().substring(j + 1),
-                                        new SimplePayload(message.getBody().substring(j + 1), "pubsub:event", "<title>" + message.getFrom() + ": " + message.getBody().substring(j + 1) + "</title>")));//message.getBody().substring(j+1))
-
-                                PubSub request = new PubSub();
-                                request.setTo("pubsub.ankurs-macbook-pro.local");
-                                request.setType(Type.GET);
-                                request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, leaf.getId()));
-
-                                request.setPubSubNamespace(PubSubNamespace.OWNER);
-
-                                connection.sendPacket(request);
 
 
-                            } catch (XMPPException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    }
+        if (message.getType() == Message.Type.chat) {
+            if (message.getBody().equals("registered")) {
+                Roster roster = connection.getRoster();
+                try {
+                    roster.createEntry(message.getFrom(), message.getFrom(), null);
+                } catch (XMPPException ex) {
+                    Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
                 }
-    
+            }
+            System.out.println(message.getFrom() + " says: " + message.getBody());
+            PubSubManager mgr = new PubSubManager(connection);
+            int index = message.getBody().indexOf("create");
+            if (index >= 0) {
+                int i = message.getBody().indexOf(" ");
+                LeafNode leaf;
+                try {
+                    System.out.println(message.getBody().substring(i + 1) + "|");
+                    leaf = mgr.createNode(message.getBody().substring(i + 1));
+                    ConfigureForm form = new ConfigureForm(FormType.submit);
+                    form.setAccessModel(AccessModel.open);
+                    form.setDeliverPayloads(true);
+                    form.setNotifyRetract(true);
+                    form.setPersistentItems(true);
+                    form.setPublishModel(PublishModel.open);
+
+                    leaf.sendConfigurationForm(form);
+                    sendMessage(message.getBody(), message.getFrom());
+                    leaf.addItemEventListener(new ItemEventCoordinator());
+
+                } catch (XMPPException ex) {
+                    Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            int index1 = message.getBody().indexOf("publish");
+            if (index1 >= 0) {
+                int i = message.getBody().indexOf(" ");
+                int j = message.getBody().lastIndexOf(" ");
+                LeafNode leaf;
+                try {
+                    leaf = (LeafNode) mgr.getNode(message.getBody().substring(i + 1, j));
+                    leaf.send(new PayloadItem(message.getBody().substring(j + 1),
+                            new SimplePayload(message.getBody().substring(j + 1), "pubsub:event", "<title>" + message.getFrom() + ": " + message.getBody().substring(j + 1) + "</title>")));//message.getBody().substring(j+1))
+
+                    PubSub request = new PubSub();
+                    request.setTo("pubsub.ankurs-macbook-pro.local");
+                    request.setType(Type.GET);
+                    request.addExtension(new NodeExtension(PubSubElementType.SUBSCRIPTIONS, leaf.getId()));
+
+                    request.setPubSubNamespace(PubSubNamespace.OWNER);
+
+                    connection.sendPacket(request);
+
+
+                } catch (XMPPException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
 
     public static void main(String args[]) throws XMPPException, IOException {
         // declare variables
@@ -431,7 +430,7 @@ public class Bot implements MessageListener, PacketListener{
         String j = userList.substring(0, userList.lastIndexOf(","));
         System.out.println(j);
         DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost("http://10.124.4.62:3000/push/push");
+        HttpPost httpPost = new HttpPost("http://192.168.0.14:3000/push/push");
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
         nvps.add(new BasicNameValuePair("jabber_ids", j));
 
@@ -449,8 +448,6 @@ public class Bot implements MessageListener, PacketListener{
             httpPost.releaseConnection();
         }
     }
-
-   
 }
 //node.getSubscriptions gives all the subscribers for the particular node. 
 //   // Discover the node subscriptions
