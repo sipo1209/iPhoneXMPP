@@ -430,7 +430,7 @@ public class Bot implements MessageListener, PacketListener {
         String j = userList.substring(0, userList.lastIndexOf(","));
         System.out.println(j);
         DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost("http://192.168.0.14:3000/push/push");
+        HttpPost httpPost = new HttpPost("http://10.124.4.92:3000/push/push");
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
         nvps.add(new BasicNameValuePair("jabber_ids", j));
 
