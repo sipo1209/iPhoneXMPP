@@ -113,7 +113,7 @@
     [prefs synchronize];
     
     NSURL *url = [NSURL URLWithString:
-                  @"http://10.124.4.62:3000/device"];
+                  @"http://push.herokuapp.com/device"];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&device_type=IOS&registration_id=%@",device_id,devTok];
     NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];

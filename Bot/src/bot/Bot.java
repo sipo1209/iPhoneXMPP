@@ -67,7 +67,7 @@ import org.jivesoftware.smackx.pubsub.packet.PubSub;
 import org.jivesoftware.smackx.pubsub.packet.PubSubNamespace;
 import org.xmlpull.mxp1.MXParser;
 import org.xmlpull.v1.XmlPullParser;
-
+import org.jivesoftware.whack.*;
 public class Bot implements MessageListener, PacketListener {
 
     public XMPPConnection connection;
@@ -363,7 +363,31 @@ public class Bot implements MessageListener, PacketListener {
                     Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            
 
+//             int index2 = message.getBody().indexOf("createme");
+//            if (index2 >= 0) {
+//                int i = message.getBody().indexOf(" ");
+//                LeafNode leaf;
+//                try {
+//                    System.out.println(message.getBody().substring(i + 1) + "|");
+//                    leaf = mgr.createNode(message.getBody().substring(i + 1));
+//                    ConfigureForm form = new ConfigureForm(FormType.submit);
+//                    form.setAccessModel(AccessModel.open);
+//                    form.setDeliverPayloads(true);
+//                    form.setNotifyRetract(true);
+//                    form.setPersistentItems(true);
+//                    form.setPublishModel(PublishModel.open);
+//
+//                    leaf.sendConfigurationForm(form);
+//                    sendMessage(message.getBody(), message.getFrom());
+//                    leaf.addItemEventListener(new ItemEventCoordinator());
+//
+//                } catch (XMPPException ex) {
+//                    Logger.getLogger(Bot.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+            
             int index1 = message.getBody().indexOf("publish");
             if (index1 >= 0) {
                 int i = message.getBody().indexOf(" ");
@@ -430,7 +454,7 @@ public class Bot implements MessageListener, PacketListener {
         String j = userList.substring(0, userList.lastIndexOf(","));
         System.out.println(j);
         DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost("http://10.124.4.92:3000/push/push");
+        HttpPost httpPost = new HttpPost("http://push.herokuapp.com/push/push");
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
         nvps.add(new BasicNameValuePair("jabber_ids", j));
 

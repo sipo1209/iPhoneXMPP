@@ -56,7 +56,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Classes/iPhoneXMPPAppDelegate.m"
@@ -72,13 +72,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Classes/SettingsViewController.m"
-         timestampString = "373731353.12763"
+         filePath = "Classes/iPhoneXMPPAppDelegate.m"
+         timestampString = "373858339.983943"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "126"
-         endingLineNumber = "126"
-         landmarkName = "-done:"
+         startingLineNumber = "92"
+         endingLineNumber = "92"
+         landmarkName = "-application:didRegisterForRemoteNotificationsWithDeviceToken:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

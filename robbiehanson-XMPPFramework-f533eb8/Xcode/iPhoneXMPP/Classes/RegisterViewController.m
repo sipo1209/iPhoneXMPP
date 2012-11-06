@@ -59,7 +59,7 @@
 NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
     
        NSURL *url = [NSURL URLWithString:
-                  @"http://10.124.4.62:3000/user"];
+                  @"http://push.herokuapp.com/user"];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&jabber_id=%@",device_identifier,myJID];
     NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];
