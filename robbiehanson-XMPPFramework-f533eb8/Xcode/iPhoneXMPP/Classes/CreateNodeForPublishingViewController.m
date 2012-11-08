@@ -48,12 +48,9 @@
      
     NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:[NSString stringWithFormat:@"create %@",create.text]];
     
-    XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"];
-    XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
-    [message addChild:body];
-    
-    XMPPStream *str = [self appDelegate].xmppStream;
-    [str sendElement:message];
+    XMPPPubSub *pubsub = [[self appDelegate] xmppPubSub];
+    [pubsub createNode:create.text withOptions:nil];
+     [pubsub subscribeToNode:create.text withOptions:nil];
 }
 
 

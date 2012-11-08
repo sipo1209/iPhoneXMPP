@@ -117,15 +117,12 @@
 }
 
 -(IBAction)publish:(id)sender{
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:[NSString stringWithFormat:@"publish %@ %@",stream,textField.text]];
+    XMPPPubSub *pubsub = [[self appDelegate]xmppPubSub];
     
-    XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"];
-    XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
-    [message addChild:body];
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:[NSString stringWithFormat:@"%@",textField.text]];
+  
     
-    XMPPStream *str = [self appDelegate].xmppStream;
-    [str sendElement:message];
-
+    [pubsub publishToNode:stream entry:body];
    
 }
 @end

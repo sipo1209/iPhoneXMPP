@@ -173,7 +173,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 	// Everything else plugs into the xmppStream, such as modules/extensions and delegates.
 
 	xmppStream = [[XMPPStream alloc] init];
-	
+//	[xmppStream setHostName:@"ankurs-macbook-pro.local"];
+//    	[xmppStream setHostPort:5224];
 	#if !TARGET_IPHONE_SIMULATOR
 	{
 		// Want xmpp to run in the background?

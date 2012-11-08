@@ -44,19 +44,19 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
     
     
     
-        XMPPRoster *roster =  [[self appDelegate] xmppRoster ];
-        [roster subscribePresenceToUser:[XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"]];
-    //
-        [roster addDelegate:self delegateQueue:dispatch_get_current_queue()];
-    //
-     NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:@"registered"];
-    //
-        XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local/Smack"];
-        XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
-        [message addChild:body];
-    //
-        XMPPStream *str = [self appDelegate].xmppStream;
-        [str sendElement:message];
+//        XMPPRoster *roster =  [[self appDelegate] xmppRoster ];
+//        [roster subscribePresenceToUser:[XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local"]];
+//    //
+//        [roster addDelegate:self delegateQueue:dispatch_get_current_queue()];
+//    //
+//     NSXMLElement *body = [NSXMLElement elementWithName:@"body" stringValue:@"registered"];
+//    //
+//        XMPPJID *to = [XMPPJID jidWithString:@"bot@ankurs-macbook-pro.local/Smack"];
+//        XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:to];
+//        [message addChild:body];
+//    //
+//        XMPPStream *str = [self appDelegate].xmppStream;
+//        [str sendElement:message];
     streams = [[ConfigureStreamViewController alloc] initWithNibName:@"ConfigureStreamViewController" bundle:nil];
     
     UINavigationController *nav = [self appDelegate].navigationController;
