@@ -30,9 +30,11 @@
 
 - (void)setField:(UITextField *)field forKey:(NSString *)key
 {
+    NSString *username = field.text;
+    username = [username stringByAppendingFormat:@"%@",@"ankurs-macbook-pro.local"];
     if (field.text != nil)
     {
-        [[NSUserDefaults standardUserDefaults] setObject:field.text forKey:key];
+        [[NSUserDefaults standardUserDefaults] setObject:username forKey:key];
     } else {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
     }
@@ -50,7 +52,7 @@
     
     
     
-   // I dont want to know the presence of the bot. But want the bot to know when I am available or offline. I ant sent a message until I have conneted with a username and password. 
+    
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     // getting an NSString
@@ -59,7 +61,7 @@
 NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
     
        NSURL *url = [NSURL URLWithString:
-                  @"http://push.herokuapp.com/user"];
+                  @"http://0.0.0.0/user"];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&jabber_id=%@",device_identifier,myJID];
     NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];

@@ -1,0 +1,27 @@
+get_online_users(Host) ->
+    case catch ejabberd_sm:get_vh_session_list(Host) of
+	{'EXIT', _Reason} ->
+	    [];
+	USRs ->
+	    SURs = lists:sort([{S, U, R} || {U, S, R} <- USRs]),
+	    lists:map(fun({S, U, R}) ->
+			  %%    U ++ "@" ++ S ++ "/" ++ R,
+			 ?INFO_MSG("presence online"++     U ++ "@" ++ S ++ "/" ++ R, []),
+		      end, SURs)
+    end.
+
+get_all_vh_users(Host) ->
+    case catch ejabberd_auth:get_vh_registered_users(Host) of
+	{'EXIT', _Reason} ->
+	    [];
+	Users ->
+	    SUsers = lists:sort([{S, U} || {U, S} <- Users]),
+	    case length(SUsers) of
+		N when N =< 100 ->
+		    lists:map(fun({S, U}) ->
+				 %%    U ++ "@" ++ S,
+				 ?INFO_MSG("presence all"++     U ++ "@" ++ S, []),
+			      end, SUsers)
+	
+    end.
+

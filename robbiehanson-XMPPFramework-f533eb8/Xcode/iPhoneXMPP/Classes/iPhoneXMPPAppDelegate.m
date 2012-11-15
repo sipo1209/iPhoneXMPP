@@ -130,6 +130,29 @@
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    NSString* node = [userInfo valueForKey:@"node"] ;
+    NSString* group = [userInfo valueForKey:@"group"] ;
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    NSString *device_id = [prefs stringForKey:@"device_identifier"];
+    if ([node isEqualToString:@"timetable"]) {
+       
+    NSURL *url = [NSURL URLWithString:
+                  @"http://0.0.0.0:3000/timetable"];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+        NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&group=%@",device_id,group];
+        NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];
+
+    [req addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [req setHTTPMethod:@"POST"];
+   
+    NSURLConnection  * conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
+    if (conn) {
+        NSMutableData *   webData = [NSMutableData data];
+    }
+    }
+//    get the parameters. If is a new timetable connect to the rails app and get the latest timetable.
+//    I know in which class I am in. I ask for my timetable. I get the json. Parse it . and store it here.
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"updateRoot"

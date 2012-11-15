@@ -46,7 +46,14 @@ import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.provider.IQProvider;
 import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smackx.ServiceDiscoveryManager;
+import org.jivesoftware.smackx.bytestreams.socks5.provider.BytestreamsProvider;
+import org.jivesoftware.smackx.filetransfer.FileTransferListener;
+import org.jivesoftware.smackx.filetransfer.FileTransferManager;
+import org.jivesoftware.smackx.filetransfer.FileTransferRequest;
+import org.jivesoftware.smackx.filetransfer.IncomingFileTransfer;
+import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
 import org.jivesoftware.smackx.packet.DiscoverItems;
+import org.jivesoftware.smackx.provider.StreamInitiationProvider;
 import org.jivesoftware.smackx.pubsub.AccessModel;
 import org.jivesoftware.smackx.pubsub.ConfigureForm;
 import org.jivesoftware.smackx.pubsub.FormType;
@@ -74,7 +81,7 @@ public class Bot implements MessageListener, PacketListener {
     public XMPPConnection connection;
     public static String JIDs;
 
-    public void login(String userName, String password) throws XMPPException {
+    public void login(String userName, String password) throws XMPPException, FileNotFoundException {
         ConnectionConfiguration cc = new ConnectionConfiguration("ankurs-macbook-pro.local", 5222, "ankurs-macbook-pro.local");
         connection = new XMPPConnection(cc);
         try {
@@ -88,7 +95,53 @@ public class Bot implements MessageListener, PacketListener {
 
             // See if you are authenticated
             System.out.println(connection.isAuthenticated());
+ File file = new File("/Users/ankurkothari/Desktop/Desktop/xmpptryouts/Bot/src/bot/methods.txt");
+  //...checks on aFile are elided
+    StringBuilder contents = new StringBuilder();
+ try {
+      //use buffering, reading one line at a time
+      //FileReader always assumes default encoding is OK!
+      BufferedReader input =  new BufferedReader(new FileReader(file));
+      try {
+        String line = null; //not declared within while loop
+        /*
+        * readLine is a bit quirky :
+        * it returns the content of a line MINUS the newline.
+        * it returns null only for the END of the stream.
+        * it returns an empty String if two newlines appear in a row.
+        */
+        while (( line = input.readLine()) != null){
+          contents.append(line);
+          contents.append(System.getProperty("line.separator"));
+        }
+      }
+      finally {
+        input.close();
+      }
+    }
+    catch (IOException ex){
+      ex.printStackTrace();
+    }
+ System.out.println(contents.toString());
+ FileTransferManager manager = new FileTransferManager(connection);
+			// Create the outgoing file transfer
 
+// manager.addFileTransferListener(new FileTransferListener() {
+//
+//                @Override
+//                public void fileTransferRequest(FileTransferRequest request) {
+//                  IncomingFileTransfer transfer = request.accept();
+//                }
+//            });
+			OutgoingFileTransfer transfer = manager
+					 .createOutgoingFileTransfer("c@ankurs-macbook-pro.local/Smack");
+                        transfer.sendStream( new FileInputStream("/Users/ankurkothari/Desktop/Desktop/xmpptryouts/Bot/src/bot/methods.txt")
+, "methods.txt", 730, "ankur");
+                       
+ 
+			// Send the file
+//			transfer.sendFile(file,
+//					"You won't believe this!");
 // Register the listener.
             connection.addPacketListener(this, null);
 //System.out.println(connection.getPacketListeners());
@@ -103,9 +156,15 @@ public class Bot implements MessageListener, PacketListener {
 //		return subElem.getSubscriptions();
 //            
             // leaf = mgr.createNode("say5");
-            ProviderManager p = ProviderManager.getInstance();
-            p.addIQProvider("pubsub", "http://jabber.org/protocol/pubsub#owner", new IQParser());
-
+            ProviderManager pm = ProviderManager.getInstance();
+            pm.addIQProvider("pubsub", "http://jabber.org/protocol/pubsub#owner", new IQParser());
+     //   FileTransfer
+        pm.addIQProvider("si","http://jabber.org/protocol/si", new StreamInitiationProvider());
+ 
+        pm.addIQProvider("query","http://jabber.org/protocol/bytestreams", new BytestreamsProvider());
+ 
+     //   pm.addIQProvider("open","http://jabber.org/protocol/ibb", new IBBProviders.Open());
+ 
 
 //            PubSub request = new PubSub();
 //		request.setTo("pubsub.ankurs-macbook-pro.local");
@@ -204,6 +263,7 @@ public class Bot implements MessageListener, PacketListener {
 
     @Override
     public void processPacket(Packet packet) {
+        System.out.println(packet.toXML());
         Message message = (Message) packet;
         if (message.getType() == Message.Type.chat) {
             if (message.getBody().equals("registered")) {
@@ -428,7 +488,7 @@ public class Bot implements MessageListener, PacketListener {
 
 
         // Enter your login information here
-        c.login("bot", "bot");
+        c.login("b", "b");
 
         c.displayBuddyList();
 
@@ -448,6 +508,7 @@ public class Bot implements MessageListener, PacketListener {
 
         c.disconnect();
         System.exit(0);
+        
     }
 
     public static void sendPush(String userList, String node) throws UnsupportedEncodingException, IOException {

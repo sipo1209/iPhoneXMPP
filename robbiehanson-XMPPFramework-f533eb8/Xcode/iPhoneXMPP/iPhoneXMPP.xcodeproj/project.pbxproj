@@ -20,6 +20,16 @@
 		28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
 		28C286E10D94DF7D0034E888 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* RootViewController.m */; };
 		28F335F11007B36200424DE2 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* RootViewController.xib */; };
+		DA03BFDE16533B5E009A8D7C /* FollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA03BFDC16533B5E009A8D7C /* FollowViewController.m */; };
+		DA03BFDF16533B5E009A8D7C /* FollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA03BFDD16533B5E009A8D7C /* FollowViewController.xib */; };
+		DA03BFE316533BA0009A8D7C /* FollowCollegeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA03BFE116533BA0009A8D7C /* FollowCollegeViewController.m */; };
+		DA03BFE416533BA1009A8D7C /* FollowCollegeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA03BFE216533BA0009A8D7C /* FollowCollegeViewController.xib */; };
+		DA03BFE816533BAF009A8D7C /* FollowClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA03BFE616533BAF009A8D7C /* FollowClassViewController.m */; };
+		DA03BFE916533BAF009A8D7C /* FollowClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA03BFE716533BAF009A8D7C /* FollowClassViewController.xib */; };
+		DA03BFED16533BBC009A8D7C /* FollowPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA03BFEB16533BBC009A8D7C /* FollowPersonViewController.m */; };
+		DA03BFEE16533BBC009A8D7C /* FollowPersonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA03BFEC16533BBC009A8D7C /* FollowPersonViewController.xib */; };
+		DA03BFF216534B15009A8D7C /* ClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA03BFF016534B14009A8D7C /* ClassViewController.m */; };
+		DA03BFF316534B15009A8D7C /* ClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA03BFF116534B14009A8D7C /* ClassViewController.xib */; };
 		DA15D3A4163BFAAD0045F558 /* StreamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA15D3A2163BFAAD0045F558 /* StreamsViewController.m */; };
 		DA15D3A5163BFAAD0045F558 /* StreamsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA15D3A3163BFAAD0045F558 /* StreamsViewController.xib */; };
 		DA15D3A9163BFE240045F558 /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA15D3A7163BFE230045F558 /* StreamViewController.m */; };
@@ -28,6 +38,7 @@
 		DA15D3AF163C0A8E0045F558 /* ConfigureStreamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA15D3AD163C0A8D0045F558 /* ConfigureStreamViewController.xib */; };
 		DA15D3B3163C11860045F558 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA15D3B1163C11850045F558 /* HomeViewController.m */; };
 		DA15D3B4163C11860045F558 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA15D3B2163C11860045F558 /* HomeViewController.xib */; };
+		DA2937ED165236F500B90259 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2937EC165236F500B90259 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		DA3CCD4C16378C640079A80A /* XMPPBandwidthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CCC9F16378C640079A80A /* XMPPBandwidthMonitor.m */; };
 		DA3CCD4D16378C640079A80A /* XMPPCoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CCCA216378C640079A80A /* XMPPCoreDataStorage.m */; };
 		DA3CCD4E16378C640079A80A /* XMPPProcessOne.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3CCCA616378C640079A80A /* XMPPProcessOne.m */; };
@@ -171,6 +182,21 @@
 		28F335F01007B36200424DE2 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* iPhoneXMPP-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iPhoneXMPP-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		DA03BFDB16533B5E009A8D7C /* FollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowViewController.h; sourceTree = "<group>"; };
+		DA03BFDC16533B5E009A8D7C /* FollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowViewController.m; sourceTree = "<group>"; };
+		DA03BFDD16533B5E009A8D7C /* FollowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowViewController.xib; sourceTree = "<group>"; };
+		DA03BFE016533BA0009A8D7C /* FollowCollegeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowCollegeViewController.h; sourceTree = "<group>"; };
+		DA03BFE116533BA0009A8D7C /* FollowCollegeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowCollegeViewController.m; sourceTree = "<group>"; };
+		DA03BFE216533BA0009A8D7C /* FollowCollegeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowCollegeViewController.xib; sourceTree = "<group>"; };
+		DA03BFE516533BAF009A8D7C /* FollowClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowClassViewController.h; sourceTree = "<group>"; };
+		DA03BFE616533BAF009A8D7C /* FollowClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowClassViewController.m; sourceTree = "<group>"; };
+		DA03BFE716533BAF009A8D7C /* FollowClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowClassViewController.xib; sourceTree = "<group>"; };
+		DA03BFEA16533BBC009A8D7C /* FollowPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowPersonViewController.h; sourceTree = "<group>"; };
+		DA03BFEB16533BBC009A8D7C /* FollowPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowPersonViewController.m; sourceTree = "<group>"; };
+		DA03BFEC16533BBC009A8D7C /* FollowPersonViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowPersonViewController.xib; sourceTree = "<group>"; };
+		DA03BFEF16534B14009A8D7C /* ClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassViewController.h; sourceTree = "<group>"; };
+		DA03BFF016534B14009A8D7C /* ClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassViewController.m; sourceTree = "<group>"; };
+		DA03BFF116534B14009A8D7C /* ClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClassViewController.xib; sourceTree = "<group>"; };
 		DA15D3A1163BFAAD0045F558 /* StreamsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamsViewController.h; sourceTree = "<group>"; };
 		DA15D3A2163BFAAD0045F558 /* StreamsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamsViewController.m; sourceTree = "<group>"; };
 		DA15D3A3163BFAAD0045F558 /* StreamsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StreamsViewController.xib; sourceTree = "<group>"; };
@@ -183,6 +209,8 @@
 		DA15D3B0163C11850045F558 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		DA15D3B1163C11850045F558 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		DA15D3B2163C11860045F558 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		DA2937EB165236F500B90259 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		DA2937EC165236F500B90259 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		DA3CCC9E16378C640079A80A /* XMPPBandwidthMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBandwidthMonitor.h; sourceTree = "<group>"; };
 		DA3CCC9F16378C640079A80A /* XMPPBandwidthMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPBandwidthMonitor.m; sourceTree = "<group>"; };
 		DA3CCCA116378C640079A80A /* XMPPCoreDataStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPCoreDataStorage.h; sourceTree = "<group>"; };
@@ -478,6 +506,21 @@
 				DA15D3B0163C11850045F558 /* HomeViewController.h */,
 				DA15D3B1163C11850045F558 /* HomeViewController.m */,
 				DA15D3B2163C11860045F558 /* HomeViewController.xib */,
+				DA03BFDB16533B5E009A8D7C /* FollowViewController.h */,
+				DA03BFDC16533B5E009A8D7C /* FollowViewController.m */,
+				DA03BFDD16533B5E009A8D7C /* FollowViewController.xib */,
+				DA03BFE016533BA0009A8D7C /* FollowCollegeViewController.h */,
+				DA03BFE116533BA0009A8D7C /* FollowCollegeViewController.m */,
+				DA03BFE216533BA0009A8D7C /* FollowCollegeViewController.xib */,
+				DA03BFE516533BAF009A8D7C /* FollowClassViewController.h */,
+				DA03BFE616533BAF009A8D7C /* FollowClassViewController.m */,
+				DA03BFE716533BAF009A8D7C /* FollowClassViewController.xib */,
+				DA03BFEA16533BBC009A8D7C /* FollowPersonViewController.h */,
+				DA03BFEB16533BBC009A8D7C /* FollowPersonViewController.m */,
+				DA03BFEC16533BBC009A8D7C /* FollowPersonViewController.xib */,
+				DA03BFEF16534B14009A8D7C /* ClassViewController.h */,
+				DA03BFF016534B14009A8D7C /* ClassViewController.m */,
+				DA03BFF116534B14009A8D7C /* ClassViewController.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -493,6 +536,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				DA2937E9165236E700B90259 /* JSON */,
 				DC1F98001152CAF300138A8F /* XMPP */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -539,6 +583,15 @@
 				DCD4944212234A49004BEE1A /* libresolv.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA2937E9165236E700B90259 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				DA2937EB165236F500B90259 /* JSONKit.h */,
+				DA2937EC165236F500B90259 /* JSONKit.m */,
+			);
+			name = JSON;
 			sourceTree = "<group>";
 		};
 		DA3CCC9C16378C640079A80A /* Extensions */ = {
@@ -1230,6 +1283,11 @@
 				DAB12B25163C498F008DD872 /* CreateNodeForPublishingViewController.xib in Resources */,
 				DAB12B2B163C499C008DD872 /* SubscribeToNodeViewController.xib in Resources */,
 				DA6C64F6163D3E53000717A0 /* PublishStreamsViewController.xib in Resources */,
+				DA03BFDF16533B5E009A8D7C /* FollowViewController.xib in Resources */,
+				DA03BFE416533BA1009A8D7C /* FollowCollegeViewController.xib in Resources */,
+				DA03BFE916533BAF009A8D7C /* FollowClassViewController.xib in Resources */,
+				DA03BFEE16533BBC009A8D7C /* FollowPersonViewController.xib in Resources */,
+				DA03BFF316534B15009A8D7C /* ClassViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1356,6 +1414,12 @@
 				DAB12B24163C498F008DD872 /* CreateNodeForPublishingViewController.m in Sources */,
 				DAB12B2A163C499C008DD872 /* SubscribeToNodeViewController.m in Sources */,
 				DA6C64F5163D3E53000717A0 /* PublishStreamsViewController.m in Sources */,
+				DA2937ED165236F500B90259 /* JSONKit.m in Sources */,
+				DA03BFDE16533B5E009A8D7C /* FollowViewController.m in Sources */,
+				DA03BFE316533BA0009A8D7C /* FollowCollegeViewController.m in Sources */,
+				DA03BFE816533BAF009A8D7C /* FollowClassViewController.m in Sources */,
+				DA03BFED16533BBC009A8D7C /* FollowPersonViewController.m in Sources */,
+				DA03BFF216534B15009A8D7C /* ClassViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
