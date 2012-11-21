@@ -31,11 +31,16 @@
 - (void)setField:(UITextField *)field forKey:(NSString *)key
 {
     NSString *username = field.text;
-    username = [username stringByAppendingFormat:@"%@",@"ankurs-macbook-pro.local"];
-    if (field.text != nil)
+    username = [username stringByAppendingFormat:@"%@",@"@ankurs-macbook-pro.local"];
+    if (field.text != nil && [key isEqualToString:kXMPPmyJID])
     {
         [[NSUserDefaults standardUserDefaults] setObject:username forKey:key];
-    } else {
+    }
+    else if (field.text != nil && [key isEqualToString:kXMPPmyPassword])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:field.text forKey:key];
+    }
+    else {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
     }
 }
@@ -61,7 +66,7 @@
 NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
     
        NSURL *url = [NSURL URLWithString:
-                  @"http://0.0.0.0/user"];
+                  @"http://10.124.4.80:3000/user"];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&jabber_id=%@",device_identifier,myJID];
     NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];

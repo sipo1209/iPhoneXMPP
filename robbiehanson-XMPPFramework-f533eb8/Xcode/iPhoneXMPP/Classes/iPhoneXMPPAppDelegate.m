@@ -12,6 +12,8 @@
 #import "StreamsViewController.h"
 #import "DDLog.h"
 #import "DDTTYLogger.h"
+#import "JSONKit.h"
+#import "TimetableViewController.h"
 
 #import <CFNetwork/CFNetwork.h>
 
@@ -56,6 +58,10 @@
 @synthesize publications;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    
+
+
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
     
     
@@ -133,23 +139,33 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     NSString* node = [userInfo valueForKey:@"node"] ;
     NSString* group = [userInfo valueForKey:@"group"] ;
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    
+  NSURLResponse* response = nil;
+NSError* err = nil;
+    NSData* jsonData;
     NSString *device_id = [prefs stringForKey:@"device_identifier"];
     if ([node isEqualToString:@"timetable"]) {
        
     NSURL *url = [NSURL URLWithString:
-                  @"http://0.0.0.0:3000/timetable"];
+                  @"http://10.124.4.80:3000/timetable"];
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
         NSString *postStr =  [NSString stringWithFormat:@"device_identifier=%@&group=%@",device_id,group];
         NSString *strLength = [NSString stringWithFormat:@"%d", [postStr length]];
-
-    [req addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+     [req addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [req setHTTPMethod:@"POST"];
-   
-    NSURLConnection  * conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
-    if (conn) {
-        NSMutableData *   webData = [NSMutableData data];
-    }
+        [req setHTTPBody: [postStr dataUsingEncoding:NSUTF8StringEncoding]];
+jsonData = [NSURLConnection sendSynchronousRequest:req returningResponse:&response error:&err];
+      NSString *json =   [NSString stringWithUTF8String:[jsonData bytes]];
+        [prefs setObject:jsonData forKey:@"timetable"];
+
+  //        for (id key in dictionary) {
+//            
+//            NSLog(@"key: %@, value: %@", key, [dictionary objectForKey:key]);
+//            
+//        }
+      
+
+        TimetableViewController *timetable = [[TimetableViewController alloc]init];
+        [navigationController presentViewController:timetable animated:YES completion:nil];
     }
 //    get the parameters. If is a new timetable connect to the rails app and get the latest timetable.
 //    I know in which class I am in. I ask for my timetable. I get the json. Parse it . and store it here.

@@ -116,6 +116,10 @@
 		DAB12B25163C498F008DD872 /* CreateNodeForPublishingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAB12B23163C498F008DD872 /* CreateNodeForPublishingViewController.xib */; };
 		DAB12B2A163C499C008DD872 /* SubscribeToNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB12B28163C499C008DD872 /* SubscribeToNodeViewController.m */; };
 		DAB12B2B163C499C008DD872 /* SubscribeToNodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAB12B29163C499C008DD872 /* SubscribeToNodeViewController.xib */; };
+		DAFBACBE1655F5500008A7BD /* TimetableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFBACBC1655F5500008A7BD /* TimetableViewController.m */; };
+		DAFBACBF1655F5500008A7BD /* TimetableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAFBACBD1655F5500008A7BD /* TimetableViewController.xib */; };
+		DAFBACC816561A470008A7BD /* DayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAFBACC616561A460008A7BD /* DayViewController.m */; };
+		DAFBACC916561A470008A7BD /* DayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DAFBACC716561A470008A7BD /* DayViewController.xib */; };
 		DC1CF89B1361F28000E71363 /* NSString+DDXML.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1CF8901361F28000E71363 /* NSString+DDXML.m */; };
 		DC1CF89D1361F28000E71363 /* DDXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1CF8941361F28000E71363 /* DDXMLDocument.m */; };
 		DC1CF89E1361F28000E71363 /* DDXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1CF8961361F28000E71363 /* DDXMLElement.m */; };
@@ -364,6 +368,12 @@
 		DAB12B27163C499B008DD872 /* SubscribeToNodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeToNodeViewController.h; sourceTree = "<group>"; };
 		DAB12B28163C499C008DD872 /* SubscribeToNodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeToNodeViewController.m; sourceTree = "<group>"; };
 		DAB12B29163C499C008DD872 /* SubscribeToNodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscribeToNodeViewController.xib; sourceTree = "<group>"; };
+		DAFBACBB1655F5500008A7BD /* TimetableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimetableViewController.h; sourceTree = "<group>"; };
+		DAFBACBC1655F5500008A7BD /* TimetableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimetableViewController.m; sourceTree = "<group>"; };
+		DAFBACBD1655F5500008A7BD /* TimetableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimetableViewController.xib; sourceTree = "<group>"; };
+		DAFBACC516561A460008A7BD /* DayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayViewController.h; sourceTree = "<group>"; };
+		DAFBACC616561A460008A7BD /* DayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayViewController.m; sourceTree = "<group>"; };
+		DAFBACC716561A470008A7BD /* DayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayViewController.xib; sourceTree = "<group>"; };
 		DC1CF88F1361F28000E71363 /* NSString+DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DDXML.h"; sourceTree = "<group>"; };
 		DC1CF8901361F28000E71363 /* NSString+DDXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDXML.m"; sourceTree = "<group>"; };
 		DC1CF8911361F28000E71363 /* DDXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDXML.h; sourceTree = "<group>"; };
@@ -521,6 +531,12 @@
 				DA03BFEF16534B14009A8D7C /* ClassViewController.h */,
 				DA03BFF016534B14009A8D7C /* ClassViewController.m */,
 				DA03BFF116534B14009A8D7C /* ClassViewController.xib */,
+				DAFBACBB1655F5500008A7BD /* TimetableViewController.h */,
+				DAFBACBC1655F5500008A7BD /* TimetableViewController.m */,
+				DAFBACBD1655F5500008A7BD /* TimetableViewController.xib */,
+				DAFBACC516561A460008A7BD /* DayViewController.h */,
+				DAFBACC616561A460008A7BD /* DayViewController.m */,
+				DAFBACC716561A470008A7BD /* DayViewController.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1288,6 +1304,8 @@
 				DA03BFE916533BAF009A8D7C /* FollowClassViewController.xib in Resources */,
 				DA03BFEE16533BBC009A8D7C /* FollowPersonViewController.xib in Resources */,
 				DA03BFF316534B15009A8D7C /* ClassViewController.xib in Resources */,
+				DAFBACBF1655F5500008A7BD /* TimetableViewController.xib in Resources */,
+				DAFBACC916561A470008A7BD /* DayViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1420,6 +1438,8 @@
 				DA03BFE816533BAF009A8D7C /* FollowClassViewController.m in Sources */,
 				DA03BFED16533BBC009A8D7C /* FollowPersonViewController.m in Sources */,
 				DA03BFF216534B15009A8D7C /* ClassViewController.m in Sources */,
+				DAFBACBE1655F5500008A7BD /* TimetableViewController.m in Sources */,
+				DAFBACC816561A470008A7BD /* DayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

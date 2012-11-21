@@ -85,8 +85,10 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  
-  jidField.text = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
+    NSString *s = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
+    NSRange i = [s rangeOfString:@"@"];
+    
+    jidField.text = [s substringToIndex:i.location];
   passwordField.text = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyPassword];
 }
 
@@ -96,12 +98,20 @@ NSString *const kXMPPmyPassword = @"kXMPPmyPassword";
 
 - (void)setField:(UITextField *)field forKey:(NSString *)key
 {
-  if (field.text != nil) 
-  {
-    [[NSUserDefaults standardUserDefaults] setObject:field.text forKey:key];
-  } else {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
-  }
+    
+    NSString *username = field.text;
+    username = [username stringByAppendingFormat:@"%@",@"@ankurs-macbook-pro.local"];
+    if (field.text != nil && [key isEqualToString:kXMPPmyJID])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:username forKey:key];
+    }
+  else  if (field.text != nil && [key isEqualToString:kXMPPmyPassword])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:field.text forKey:key];
+    }
+    else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+    }
 }
 - (iPhoneXMPPAppDelegate *)appDelegate
 {
